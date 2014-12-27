@@ -1,6 +1,6 @@
 import datetime
 
-from d_clock.config import DEFAULT_CYCLES
+from d_clock.config import Config
 from cycles import Cycles
 
 
@@ -18,7 +18,7 @@ class Clock(object):
             date and time.
 
         """
-        self.cycles = Cycles(DEFAULT_CYCLES)
+        self.cycles = Config.get_instance('CYCLES', Cycles, default=Cycles())
         self.set_info(info)
 
     def set_info(self, info):

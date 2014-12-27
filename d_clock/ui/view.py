@@ -1,6 +1,6 @@
 from PySide.QtGui import QVBoxLayout, QWidget
 
-from d_clock.config import CLOCK_FORMAT
+from d_clock.config import Config
 from large_label import LargeLabel
 
 
@@ -34,11 +34,17 @@ class View(QWidget):
 
         """
         self.clock = clock
+        self.update_clock()
 
-        message = CLOCK_FORMAT.format(
-            time=clock.time,
-            day=clock.day,
-            cycle=clock.cycle
+    def update_clock(self):
+        """ Update the clock's display.
+
+        """
+        clock_format = Config.get('CLOCK_FORMAT', '')
+        message = clock_format.format(
+            time=self.clock.time,
+            day=self.clock.day,
+            cycle=self.clock.cycle
         )
 
         self.clock_label.setText(message)

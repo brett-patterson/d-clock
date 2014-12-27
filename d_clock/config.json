@@ -1,0 +1,21 @@
+{
+  "CLOCK_FORMAT": "{time}\n{day} {cycle}", 
+  "CYCLES": [
+    [
+      "morning", 
+      "02:00"
+    ], 
+    [
+      "afternoon", 
+      "11:00"
+    ], 
+    [
+      "evening", 
+      "17:00"
+    ], 
+    [
+      "night", 
+      "20:00"
+    ]
+  ]
+}

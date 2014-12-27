@@ -1,3 +1,9 @@
+import datetime
+
+
+PACK_TIME_FORMAT = '%H:%M'
+
+
 class Cycles(object):
     """ Manages the cycles for the clock, i.e. what is considered day, night,
     etc. Cycles are denoted by their start time and are assumed to continue
@@ -61,3 +67,43 @@ class Cycles(object):
                 return label
 
         return ''
+
+    def pack(self):
+        """ Pack the cycles object into a JSON-serializable format.
+
+        Returns:
+        --------
+        A list of (label, marker) tuples where the markers have been
+        converted to time strings.
+
+        """
+        result = []
+
+        for label, marker in self.cycles:
+            result.append((label, marker.strftime(PACK_TIME_FORMAT)))
+
+        return result
+
+    @classmethod
+    def unpack(cls, data):
+        """ Unpack a serialized cycles object.
+
+        Parameters:
+        -----------
+        data : list
+            A list of (label, marker) tuples where the markers have been
+        converted to time strings.
+
+        Returns:
+        --------
+        A Cycles object.
+
+        """
+        cycles = []
+
+        for label, marker_string in data:
+            marker_date = datetime.datetime.strptime(marker_string,
+                                                     PACK_TIME_FORMAT)
+            cycles.append((label, marker_date.time()))
+
+        return cls(cycles)
