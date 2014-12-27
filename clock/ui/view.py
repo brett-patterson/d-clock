@@ -1,31 +1,27 @@
-from PySide.QtGui import QMainWindow
+from PySide.QtGui import QVBoxLayout, QWidget
 
-from display import Display
+from large_label import LargeLabel
 
 
-class View(QMainWindow):
-    """ Displays a Clock object.
+class View(QWidget):
+    """ A widget to display a Clock object.
 
     """
     def __init__(self, clock, *args, **kwargs):
-        """ Initialize the view.
-
-        Parameters:
-        -----------
-        clock : Clock
-            The clock object to display.
-
-        """
         super(View, self).__init__(*args, **kwargs)
         self.setup_ui()
         self.set_clock(clock)
 
     def setup_ui(self):
-        """ Setup the user interface for the view.
+        """ Create the UI for the view.
 
         """
-        self.display = Display()
-        self.setCentralWidget(self.display)
+        layout = QVBoxLayout()
+
+        self.clock_label = LargeLabel()
+        layout.addWidget(self.clock_label)
+
+        self.setLayout(layout)
 
     def set_clock(self, clock):
         """ Set the clock being displayed by the view.
@@ -37,4 +33,4 @@ class View(QMainWindow):
 
         """
         self.clock = clock
-        self.display.setText(clock.message)
+        self.clock_label.setText(clock.message)

@@ -1,23 +1,18 @@
 from PySide.QtCore import Qt
-from PySide.QtGui import QFont, QFontMetrics, QLabel, QPalette
+from PySide.QtGui import QFont, QFontMetrics, QLabel
 
 
-class Display(QLabel):
-    """ The main display for the clock interface.
+class LargeLabel(QLabel):
+    """ A label that grows its text to the largest size possible.
 
     """
     def __init__(self, *args, **kwargs):
         """ Initialize the display.
 
         """
-        super(Display, self).__init__(*args, **kwargs)
+        super(LargeLabel, self).__init__(*args, **kwargs)
         self.setAlignment(Qt.AlignCenter)
         self.setWordWrap(True)
-
-        palette = self.palette()
-        palette.setColor(QPalette.Background, Qt.white)
-        self.setAutoFillBackground(True)
-        self.setPalette(palette)
 
     def setText(self, text):
         """ Reimplement the setText method to resize the font accordingly.
@@ -28,7 +23,7 @@ class Display(QLabel):
             The text to display.
 
         """
-        super(Display, self).setText(text)
+        super(LargeLabel, self).setText(text)
         self.resize_font()
 
     def resizeEvent(self, event):
@@ -41,11 +36,11 @@ class Display(QLabel):
             The resize event.
 
         """
-        super(Display, self).resizeEvent(event)
+        super(LargeLabel, self).resizeEvent(event)
         self.resize_font()
 
     def resize_font(self):
-        """ Resize the display's font size to the maximum that will fit within
+        """ Resize the label's font size to the maximum that will fit within
         the boundaries of the widget.
 
         """

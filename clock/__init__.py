@@ -3,12 +3,12 @@ import sys
 from PySide.QtGui import QApplication
 
 from app.clock import Clock
-from ui.view import View
+from ui.window import Window
 
 
 def main():
     app = QApplication(sys.argv)
     clock = Clock('01:35 PM\nSunday afternoon')
-    view = View(clock)
-    view.showFullScreen()
+    window = Window(clock)
+    window.showFullScreen()
     sys.exit(app.exec_())
