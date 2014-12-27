@@ -1,8 +1,8 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='clock',
+    name='d_clock',
     version='0.1',
     packages=find_packages(),
-    scripts=['clock-run']
+    scripts=['d-clock-run']
 )

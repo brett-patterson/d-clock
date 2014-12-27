@@ -37,7 +37,7 @@ class LargeLabel(QLabel):
 
         """
         super(LargeLabel, self).resizeEvent(event)
-        self.resize_font()
+        # self.resize_font()
 
     def resize_font(self):
         """ Resize the label's font size to the maximum that will fit within

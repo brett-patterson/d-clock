@@ -1,0 +1,4 @@
+#!/usr/bin/python
+
+import d_clock
+d_clock.main()
