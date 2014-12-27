@@ -57,7 +57,7 @@ class Cycles(object):
 
             next_marker = self.cycles[next_index][1]
 
-            if time >= marker and time <= next_marker:
+            if time >= marker and time < next_marker:
                 return label
 
         return ''
