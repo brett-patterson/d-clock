@@ -1,1 +1,5 @@
 #Clock#
+
+##Requirements##
+* Qt
+* PySide
