@@ -1,3 +1,4 @@
+from PySide.QtCore import QTimer
 from PySide.QtGui import QVBoxLayout, QWidget
 
 from d_clock.config import Config
@@ -9,9 +10,21 @@ class View(QWidget):
 
     """
     def __init__(self, clock, *args, **kwargs):
+        """ Initialize the view.
+
+        Parameters:
+        -----------
+        clock : Clock
+            The clock object to display.
+
+        """
         super(View, self).__init__(*args, **kwargs)
         self.setup_ui()
         self.set_clock(clock)
+
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.update_clock)
+        self.timer.start(1000)
 
     def setup_ui(self):
         """ Create the UI for the view.
@@ -41,10 +54,5 @@ class View(QWidget):
 
         """
         clock_format = Config.get('CLOCK_FORMAT', '')
-        message = clock_format.format(
-            time=self.clock.time,
-            day=self.clock.day,
-            cycle=self.clock.cycle
-        )
-
+        message = clock_format.format(**self.clock.get_info())
         self.clock_label.setText(message)

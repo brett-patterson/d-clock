@@ -8,27 +8,24 @@ class Clock(object):
     """ The top-level object representing the entire clock.
 
     """
-    def __init__(self, info=datetime.datetime.now()):
+    def __init__(self):
         """ Initialize the clock.
-
-        Parameters:
-        -----------
-        info : datetime
-            The date and time to show on the clock. Defaults to the current
-            date and time.
 
         """
         self.cycles = Config.get_instance('CYCLES', Cycles, default=Cycles())
-        self.set_info(info)
 
-    def set_info(self, info):
-        """ Set the clock's info.
+    def get_info(self):
+        """ Get the clock's info.
 
-        info : datetime
-            The date and time to show on the clock.
+        Returns:
+        --------
+        A dictionary of the clock's info represented as strings. Valid keys are
+        'time', 'day', and 'cycle'.
 
         """
-        self.info = info
-        self.time = info.time().strftime('%I:%M %p')
-        self.day = info.strftime('%A')
-        self.cycle = self.cycles.cycle_for_time(info.time())
+        now = datetime.datetime.now()
+        return {
+            'time': now.time().strftime('%I:%M %p'),
+            'day': now.strftime('%A'),
+            'cycle': self.cycles.cycle_for_time(now.time())
+        }
