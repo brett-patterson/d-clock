@@ -11,11 +11,10 @@ def main():
     app = QApplication(sys.argv)
     clock = Clock()
     window = Window(clock)
-    window.show()
 
-    def run():
-        ret = app.exec_()
-        Config.write()
-        return ret
+    if Config.get('FULLSCREEN', True):
+        window.showFullScreen()
+    else:
+        window.showNormal()
 
-    sys.exit(run())
+    sys.exit(app.exec_())
