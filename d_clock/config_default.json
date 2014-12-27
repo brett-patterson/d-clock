@@ -1,6 +1,6 @@
 {
   "CLOCK_FORMAT": "{time}\n{day} {cycle}", 
-  "FULLSCREEN": true, 
+  "FULLSCREEN": false, 
   "CYCLES": [
     [
       "morning", 

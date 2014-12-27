@@ -53,6 +53,6 @@ class View(QWidget):
         """ Update the clock's display.
 
         """
-        clock_format = Config.get('CLOCK_FORMAT', '')
+        clock_format = Config.get('CLOCK_FORMAT', '{time}\n{day} {cycle}')
         message = clock_format.format(**self.clock.get_info())
         self.clock_label.setText(message)
