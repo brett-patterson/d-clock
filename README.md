@@ -2,4 +2,3 @@
 
 ##Requirements##
 * Qt
-* PySide
