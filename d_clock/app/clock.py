@@ -34,7 +34,6 @@ class Clock(object):
 
         """
         now = self.when()
-        print now
         return {
             'time': now.strftime('%I:%M %p'),
             'day': now.strftime('%A'),
