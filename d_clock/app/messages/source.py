@@ -7,4 +7,4 @@ class Source(object):
         subclasses.
 
         """
-        raise NotImplementedError
+        return []
