@@ -1,15 +1,14 @@
-from PySide.QtCore import QTimer
 from PySide.QtGui import QVBoxLayout, QWidget
 
 from d_clock.config import Config
 from large_label import LargeLabel
 
 
-class View(QWidget):
+class ClockView(QWidget):
     """ A widget to display a Clock object.
 
     """
-    def __init__(self, clock, *args, **kwargs):
+    def __init__(self, clock, timer, *args, **kwargs):
         """ Initialize the view.
 
         Parameters:
@@ -17,14 +16,15 @@ class View(QWidget):
         clock : Clock
             The clock object to display.
 
+        timer : QTimer
+            The timer used to update the clock.
+
         """
-        super(View, self).__init__(*args, **kwargs)
+        super(ClockView, self).__init__(*args, **kwargs)
         self.setup_ui()
         self.set_clock(clock)
 
-        self.timer = QTimer()
-        self.timer.timeout.connect(self.update_clock)
-        self.timer.start(1000)
+        timer.timeout.connect(self.update_clock)
 
     def setup_ui(self):
         """ Create the UI for the view.

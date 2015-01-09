@@ -1,16 +1,18 @@
 import sys
 
-from PySide.QtGui import QAction, QMainWindow, QMenu
+from PySide.QtCore import QTimer
+from PySide.QtGui import QAction, QMainWindow, QMenu, QWidget, QVBoxLayout
 
 from d_clock.config import Config
-from view import View
+from clock_view import ClockView
+from message_view import MessageView
 
 
 class Window(QMainWindow):
-    """ A window to display a Clock view.
+    """ The main window of the application.
 
     """
-    def __init__(self, clock, *args, **kwargs):
+    def __init__(self, clock, message_source, *args, **kwargs):
         """ Initialize the view.
 
         Parameters:
@@ -20,14 +22,25 @@ class Window(QMainWindow):
 
         """
         super(Window, self).__init__(*args, **kwargs)
-        self.view = View(clock)
-        self.setCentralWidget(self.view)
+
+        self.timer = QTimer()
+        self.clock_view = ClockView(clock, self.timer)
+        self.message_view = MessageView(clock, message_source, self.timer)
+
         self.setup_ui()
+        self.timer.start(1000)
 
     def setup_ui(self):
         """ Setup the UI for the window.
 
         """
+        central_widget = QWidget()
+        layout = QVBoxLayout()
+        layout.addWidget(self.clock_view)
+        layout.addWidget(self.message_view)
+        central_widget.setLayout(layout)
+        self.setCentralWidget(central_widget)
+
         menubar = self.menuBar()
 
         file_menu = QMenu('File')

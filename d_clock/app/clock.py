@@ -14,6 +14,16 @@ class Clock(object):
         """
         self.cycles = Config.get_instance('CYCLES', Cycles, default=Cycles())
 
+    def when(self):
+        """ Get the clock's current date and time.
+
+        Returns:
+        --------
+        A datetime object.
+
+        """
+        return datetime.datetime.now()
+
     def get_info(self):
         """ Get the clock's info.
 
@@ -23,9 +33,10 @@ class Clock(object):
         'time', 'day', and 'cycle'.
 
         """
-        now = datetime.datetime.now()
+        now = self.when()
+        print now
         return {
-            'time': now.time().strftime('%I:%M %p'),
+            'time': now.strftime('%I:%M %p'),
             'day': now.strftime('%A'),
             'cycle': self.cycles.cycle_for_time(now.time())
         }
