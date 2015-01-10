@@ -29,7 +29,6 @@ class MessageView(QLabel):
         self.setup_ui()
 
         self.update_messages()
-
         timer.timeout.connect(self.update_messages)
 
     def setup_ui(self):
@@ -37,6 +36,7 @@ class MessageView(QLabel):
 
         """
         self.setAlignment(Qt.AlignCenter)
+        self.setTextFormat(Qt.RichText)
 
     def update_messages(self):
         """ Fetch messages from the source and update the UI.
@@ -44,5 +44,5 @@ class MessageView(QLabel):
         """
         for message in self.source.messages():
             if message.should_show(self.clock.when()):
-                self.setText(message.text)
+                self.setText(message.html)
                 break

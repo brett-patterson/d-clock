@@ -7,27 +7,23 @@ class Message(object):
     """ A text/image message that can be sent to the clock display.
 
     """
-    def __init__(self, text="", image="", recurring=ONCE,
+    def __init__(self, html="", recurring=ONCE,
                  target=datetime.now()):
         """ Initialize the Message object.
 
         Parameters:
         -----------
-        text : str
-            The text to display in the message.
-
-        image : str
-            The image to display in the message.
+        html : str
+            The HTML to display in the message.
 
         recurring : int
-            Whether the message is recurring. Uses bitwise constants as flags.
+            How the message should recur. Uses constants defined as integers.
 
         target : datetime
             The day and time to show the message.
 
         """
-        self.text = text
-        self.image = image
+        self.html = html
         self.recurring = recurring
         self.target = target
 
@@ -47,22 +43,22 @@ class Message(object):
         """
         delta = self.target - when
 
-        if delta.days < 0:
-            return False
-
-        if self.recurring & ONCE:
+        if self.recurring == ONCE:
             return delta.days == 0 and delta.seconds == 0
 
-        if self.recurring & HOURLY:
-            return when.time().minute == self.target.time().minute
+        elif self.recurring == HOURLY:
+            return (when.time().minute == self.target.time().minute and
+                    when.time().second == self.target.time().second)
 
-        if self.recurring & DAILY:
+        elif self.recurring == DAILY:
             return (when.time().hour == self.target.time().hour and
-                    when.time().minute == self.target.time().minute)
+                    when.time().minute == self.target.time().minute and
+                    when.time().second == self.target.time().second)
 
-        if self.recurring & WEEKLY:
+        elif self.recurring == WEEKLY:
             return (when.date() == self.target.date() and
                     when.time().hour == self.target.time().hour and
-                    when.time().minute == self.target.time().minute)
+                    when.time().minute == self.target.time().minute and
+                    when.time().second == self.target.time().second)
 
         return False
