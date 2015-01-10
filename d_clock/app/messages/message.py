@@ -1,6 +1,7 @@
 from datetime import datetime
 
-from d_clock.constants import ONCE, HOURLY, DAILY, WEEKLY
+from d_clock.constants import (ONCE, HOURLY, DAILY, WEEKLY,
+                               PACK_DATE_TIME_FORMAT)
 
 
 class Message(object):
@@ -62,3 +63,23 @@ class Message(object):
                     when.time().second == self.target.time().second)
 
         return False
+
+    @classmethod
+    def unpack(cls, data):
+        """ Unpack a serialized message object.
+
+        Parameters:
+        -----------
+        data : dict
+            A dictionary describing the message.
+
+        Returns:
+        --------
+        A reconstructed Message object.
+
+        """
+        return cls(
+            html=data['html'],
+            recurring=data['recurring'],
+            target=datetime.strptime(data['target'], PACK_DATE_TIME_FORMAT)
+        )

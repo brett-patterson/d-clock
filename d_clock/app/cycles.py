@@ -1,7 +1,6 @@
 import datetime
 
-
-PACK_TIME_FORMAT = '%H:%M'
+from d_clock.constants import PACK_TIME_FORMAT
 
 
 class Cycles(object):
