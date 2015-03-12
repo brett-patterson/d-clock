@@ -7,11 +7,11 @@ require.config({
     }
 });
 
-require(['flight/debug'], function(debug) {
+require(['flight/debug'], function (debug) {
     debug.enable(true);
     DEBUG.events.logAll();
 
-    require(['app'], function(app) {
+    require(['app'], function (app) {
         app.initialize();
     });
 });

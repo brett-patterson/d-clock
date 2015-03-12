@@ -1,7 +1,7 @@
 'use strict';
 
-define([], function() {
-    var initialize = function() {
+define([], function () {
+    var initialize = function () {
         console.log('App initialized');
     };
 

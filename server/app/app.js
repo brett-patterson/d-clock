@@ -1,3 +1,5 @@
+'use strict';
+
 var path = require('path'),
 
     express = require('express'),
@@ -40,39 +42,41 @@ require('./routes')(app);
 
 // Configure passport authentication
 passport.use('local-register', new LocalStrategy({
-        usernameField: 'email'
-    }, function(email, password, done) {
-    users.register(email, password).then(function(user) {
+    usernameField: 'email'
+}, function (email, password, done) {
+    users.register(email, password).then(function (user) {
         var info = {};
-        if (!user)
+        if (!user) {
             info.message = 'Username already in use';
+        }
         done(null, user, info);
-    }).fail(function(error) {
+    }).fail(function (error) {
         done(error);
     });
 }));
 
 passport.use('local-sign-in', new LocalStrategy({
-        usernameField: 'email'
-    }, function(email, password, done) {
-    users.authenticate(email, password).then(function(user) {
+    usernameField: 'email'
+}, function (email, password, done) {
+    users.authenticate(email, password).then(function (user) {
         var info = {};
-        if (!user)
+        if (!user) {
             info.message = 'Invalid credentials';
+        }
         done(null, user, info);
-    }).fail(function(error) {
+    }).fail(function (error) {
         done(error);
     });
 }));
 
-passport.serializeUser(function(user, done) {
+passport.serializeUser(function (user, done) {
     done(null, user.email);
 });
 
-passport.deserializeUser(function(email, done) {
-    users.get(email).then(function(user) {
+passport.deserializeUser(function (email, done) {
+    users.get(email).then(function (user) {
         done(null, user);
-    }).fail(function(error) {
+    }).fail(function (error) {
         done(error);
     });
 });

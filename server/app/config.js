@@ -1,3 +1,5 @@
+'use strict';
+
 var server = {
     port: 8000
 };
