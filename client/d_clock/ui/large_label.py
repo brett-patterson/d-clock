@@ -1,5 +1,5 @@
 from PySide.QtCore import Qt
-from PySide.QtGui import QFont, QFontMetrics, QLabel
+from PySide.QtGui import QFontMetrics, QLabel
 
 
 class LargeLabel(QLabel):
