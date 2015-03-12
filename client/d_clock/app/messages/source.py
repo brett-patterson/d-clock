@@ -93,7 +93,6 @@ class MessageClient(WebSocketClient):
             The message sent from the server.
 
         """
-        print load_messages_from_json(unicode(msg))
         self._source.add_messages(load_messages_from_json(unicode(msg)))
 
 
