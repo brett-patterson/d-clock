@@ -62,7 +62,7 @@ var get = function (email) {
         deferred.resolve(result.body);
     }).fail(function (error) {
         if (error.body.code === 'items_not_found') {
-            deferred.resolve(false);
+            deferred.resolve(undefined);
         } else {
             deferred.resolve(new Error(error.body));
         }

@@ -6,7 +6,7 @@ block head
 
 block content
     .user-form
-        form.form(action='/auth-sign-in/', method='post')
+        form.form(action='/api/auth-sign-in/', method='post')
           if messages.error
             .error #{messages.error}
 

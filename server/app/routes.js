@@ -1,16 +1,7 @@
 'use strict';
 
-var moment = require('moment');
-var passport = require('passport');
-var users = require('./models/users');
-
-var requireUser = function (req, res, next) {
-    if (req.user !== undefined) {
-        next();
-    } else {
-        res.redirect('/sign-in?nextPage=' + req.path);
-    }
-};
+var middleware = require('./middleware'),
+    users = require('./models/users');
 
 var routes = function (app) {
     app.use(function (req, res, next) {
@@ -48,44 +39,8 @@ var routes = function (app) {
         return res.render('register', { hideUserInfo: true });
     });
 
-    app.post('/auth-sign-in/', function (req, res, next) {
-        var nextPage = req.body.nextPage,
-            options = {
-                failureRedirect: '/sign-in/',
-                successRedirect: '/',
-                failureFlash: true
-            };
-
-        if (nextPage !== 'undefined') {
-            options.successRedirect = nextPage;
-        }
-
-        passport.authenticate('local-sign-in', options)(req, res, next);
-    });
-
-    app.post('/auth-register/', passport.authenticate('local-register', {
-        failureRedirect: '/register/',
-        successRedirect: '/',
-        failureFlash: true
-    }));
-
-    app.get('/dashboard/', requireUser, function (req, res) {
+    app.get('/dashboard/', middleware.requireUser, function (req, res) {
         return res.render('dashboard');
-    });
-
-    app.ws('/', function (ws, req) {
-        users.authenticate(req.query.email,
-                req.query.password).then(function (user) {
-            // Successful user authentication
-            ws.send(JSON.stringify([{
-                'html': '<b>Hello</b>, world!',
-                'recurring': 1,
-                'target': moment().add(1, 'm').format('MM-DD-YYYY HH:mm')
-            }]));
-        }).fail(function () {
-            // Unsuccessful user authentication
-            ws.close();
-        });
     });
 };
 

@@ -37,8 +37,9 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Set application routes
+// Set application routes and api
 require('./routes')(app);
+require('./api')(app);
 
 // Configure passport authentication
 passport.use('local-register', new LocalStrategy({
