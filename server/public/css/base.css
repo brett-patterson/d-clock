@@ -1,3 +1,8 @@
+.top-container {
+    width: 60%;
+    margin: 0 auto;
+}
+
 .header {
     margin-bottom: 20px;
     margin-top: 20px;
@@ -21,19 +26,20 @@
     color: #ED6B7C;
 }
 
+.top-nav li:hover {
+    border-bottom: 1px solid #ED6B7C;
+}
+
 .user-info {
     margin: 10px;
     text-align: center;
 }
 
-.content-container {
-    background-color: #85EDE0;
-    width: 100%;
-}
-
 .content {
+    border: 2px solid #85EDE0;
+    width: 100%;
     font-size: 1.2em;
-    padding: 60px;
+    padding: 2.5em;
 }
 
 .footer {
