@@ -1,5 +1,5 @@
-var moment = require('moment');
 var passport = require('passport');
+var users = require('./users');
 
 var requireUser = function(req, res, next) {
     if (req.user !== undefined)
@@ -66,11 +66,18 @@ var routes = function(app) {
     })
 
     app.ws('/', function(ws, req) {
-        ws.send(JSON.stringify([{
-            'html': '<b>Hello</b>, world!',
-            'recurring': 1,
-            'target': moment().add(1, 'm').format('MM-DD-YYYY HH:mm')
-        }]));
+        users.authenticate(req.query.email,
+            req.query.password).then(function(user) {
+                // Successful user authentication
+                ws.send(JSON.stringify([{
+                    'html': '<b>Hello</b>, world!',
+                    'recurring': 1,
+                    'target': moment().add(1, 'm').format('MM-DD-YYYY HH:mm')
+                }]));
+            }).fail(function(error) {
+                // Unsuccessful user authentication
+                ws.close();
+            });
     });
 };
 
