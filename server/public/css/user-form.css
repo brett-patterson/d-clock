@@ -1,0 +1,28 @@
+.user-form {
+    margin: 0 auto;
+    text-align: center;
+    width: 25%;
+}
+
+.user-form .error {
+    background-color: #FF6363;
+    border: 1px solid red;
+    margin-bottom: 10px;
+}
+
+.user-form .field {
+    padding: 1.5em;
+}
+
+.user-form .submit-btn {
+    margin-top: 10px;
+}
+
+.field-error {
+    background-color: #FF7A7A;
+    border: 1px solid red;
+}
+
+.field-error.right > .arrow:after {
+    border-right-color: #FF7A7A;
+}

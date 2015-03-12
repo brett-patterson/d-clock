@@ -1,0 +1,48 @@
+html
+
+  head
+    link(rel='stylesheet', type='text/css',
+         href='/lib/bootstrap/dist/css/bootstrap.min.css')
+
+    link(rel='stylesheet', type='text/css',
+         href='/css/base.css')
+
+    script(type='text/javascript', src='/lib/jquery/dist/jquery.js')
+    script(type='text/javascript', src='/lib/bootstrap/dist/js/bootstrap.js')
+
+    block head
+
+  body
+
+    .container.header
+      a(href='/')
+        div.header-title
+          h1 d-clock 
+            small a web enabled dementia clock
+      
+      ul.nav.nav-pills.pull-right.top-nav
+        li: a(href='#') Portal
+        li: a(href='#') About
+        li: a(href='#') Help
+
+    div.content-container
+      if !hideUserInfo
+        .user-info.pull-right
+          if user
+            p
+              |Hello, 
+              strong #{ user.email }
+              |!
+              br
+              a.btn.btn-primary(href='/sign-out/') Sign out
+          else
+            a.btn.btn-primary(href='/sign-in/') Sign in
+            | 
+            a.btn.btn-success(href='/register/') Register
+
+      .content
+        block content
+
+    div.container.footer
+      h3
+        small &copy;2015 d-clock, inc

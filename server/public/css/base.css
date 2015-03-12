@@ -1,0 +1,41 @@
+.header {
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.header-title {
+    color: #ED6B7C;
+    display: inline-block;
+}
+
+.header-title h1 {
+    margin: 0;
+}
+
+.top-nav {
+    display: inline-block;
+    font-size: 1.5em;
+}
+
+.top-nav a {
+    color: #ED6B7C;
+}
+
+.user-info {
+    margin: 10px;
+    text-align: center;
+}
+
+.content-container {
+    background-color: #85EDE0;
+    width: 100%;
+}
+
+.content {
+    font-size: 1.2em;
+    padding: 60px;
+}
+
+.footer {
+    text-align: center;
+}

@@ -1,0 +1,14 @@
+extends base
+
+block head
+    link(rel='stylesheet', type='text/css',
+         href='/css/user-form.css')
+
+block content
+    .user-form
+        form.form(action='/auth-sign-in/', method='post')
+          if messages.error
+            .error #{messages.error}
+          input.form-control.field(type='email', placeholder='email', name='email')
+          input.form-control.field(type='password', placeholder='password', name='password')
+          input.form-control.btn.btn-primary.submit-btn(type='submit', value='Sign in')

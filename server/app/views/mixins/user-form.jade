@@ -1,0 +1,49 @@
+mixin userFormCss
+  link(rel='stylesheet', type='text/css',
+       href='/css/user-form.css')
+
+mixin userFormJs(formId, validationOptions, fieldErrorClass)
+  script(type='text/javascript',
+       src='/lib/jquery-validation/dist/jquery.validate.js')
+
+  script(type='text/javascript').
+    $(function() {
+      var options = !{JSON.stringify(validationOptions)};
+
+      options.errorClass = 'field-error';
+
+      options.showErrors = function(errorMap, errorList) {
+        errorList.forEach(function(error) {
+          var popover = $(error.element).data('bs.popover');
+
+          if (popover) {
+            popover.options.content = error.message;
+            popover.setContent();
+            popover.tip().addClass(popover.options.placement);
+          } else {
+            $(error.element).popover({
+              content: error.message,
+              trigger: 'manual'
+            }).popover('show');
+
+            var popover = $(error.element).data('bs.popover');
+            popover.tip().addClass(options.errorClass)
+          }
+        });
+
+        this.successList.forEach(function(element) {
+          $(element).popover('destroy');
+        });
+      };
+
+      $('##{formId}').validate(options);
+    });
+
+mixin userForm(action, formId)
+  - formId = formId || 'user-form'
+
+  .user-form
+      form.form(id=formId, action=action, method='post')
+        if messages.error
+          .error #{messages.error}
+        block
