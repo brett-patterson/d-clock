@@ -1,6 +1,6 @@
 {
   "CLOCK_FORMAT": "{time}\n{day} {cycle}", 
-  "FULLSCREEN": false, 
+  "FULLSCREEN": false,
   "CYCLES": [
     [
       "morning", 
@@ -18,5 +18,6 @@
       "night", 
       "20:00"
     ]
-  ]
+  ],
+  "WS_HOST": "ws://localhost:8000"
 }
