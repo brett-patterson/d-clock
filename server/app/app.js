@@ -11,7 +11,7 @@ var path = require('path'),
     LocalStrategy = require('passport-local'),
 
     config = require('./config'),
-    users = require('./users');
+    users = require('./models/users');
 
 // Create express application
 var app = express();

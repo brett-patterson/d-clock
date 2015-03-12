@@ -1,5 +1,5 @@
 var passport = require('passport');
-var users = require('./users');
+var users = require('./models/users');
 
 var requireUser = function(req, res, next) {
     if (req.user !== undefined)
@@ -63,7 +63,7 @@ var routes = function(app) {
 
     app.get('/dashboard/', requireUser, function(req, res) {
         return res.render('dashboard');
-    })
+    });
 
     app.ws('/', function(ws, req) {
         users.authenticate(req.query.email,

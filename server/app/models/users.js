@@ -1,6 +1,6 @@
 var bcrypt = require('bcryptjs'),
     Q = require('q'),
-    config = require('./config'),
+    config = require('../config'),
     db = require('orchestrate')(config.db.key);
 
 var register = function(email, password) {
