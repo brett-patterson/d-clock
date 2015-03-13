@@ -1,0 +1,32 @@
+$error-background: #ff6363;
+$field-error-background: #ff7a7a;
+$error-border: #f00;
+
+.user-form {
+  margin: 0 auto;
+  text-align: center;
+  width: 25%;
+
+  .error {
+    background-color: $error-background;
+    border: 1px solid $error-border;
+    margin-bottom: 10px;
+  }
+
+  .field {
+    padding: 1.5em;
+  }
+
+  .submit-btn {
+    margin-top: 10px;
+  }
+}
+
+.field-error {
+  background-color: $field-error-background;
+  border: 1px solid $error-border;
+}
+
+.field-error.right > .arrow:after {
+  border-right-color: $field-error-background;
+}

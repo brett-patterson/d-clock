@@ -1,28 +1,21 @@
 .user-form {
-    margin: 0 auto;
-    text-align: center;
-    width: 25%;
-}
-
-.user-form .error {
-    background-color: #FF6363;
-    border: 1px solid red;
-    margin-bottom: 10px;
-}
-
-.user-form .field {
-    padding: 1.5em;
-}
-
-.user-form .submit-btn {
-    margin-top: 10px;
-}
+  margin: 0 auto;
+  text-align: center;
+  width: 25%; }
+  .user-form .error {
+    background-color: #ff6363;
+    border: 1px solid #f00;
+    margin-bottom: 10px; }
+  .user-form .field {
+    padding: 1.5em; }
+  .user-form .submit-btn {
+    margin-top: 10px; }
 
 .field-error {
-    background-color: #FF7A7A;
-    border: 1px solid red;
-}
+  background-color: #ff7a7a;
+  border: 1px solid #f00; }
 
 .field-error.right > .arrow:after {
-    border-right-color: #FF7A7A;
-}
+  border-right-color: #ff7a7a; }
+
+/*# sourceMappingURL=user-form.css.map */

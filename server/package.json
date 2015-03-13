@@ -26,5 +26,8 @@
     "passport-local": "^1.0.0",
     "q": "^1.1.2",
     "ws": "^0.7.1"
+  },
+  "scripts": {
+    "start-dev": "sass --watch app/scss/:public/css/ & nodemon index.js"
   }
 }

@@ -1,0 +1,50 @@
+$color-primary: #ed6b7c;
+$color-secondary: #85ede0;
+
+.top-container {
+  margin: 0 auto;
+  width: 60%;
+}
+
+.header {
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.header-title {
+  color: $color-primary;
+  display: inline-block;
+
+  h1 {
+    margin: 0;
+  }
+}
+
+.top-nav {
+  display: inline-block;
+  font-size: 1.5em;
+
+  a {
+    color: $color-primary;
+  }
+
+  li:hover {
+    border-bottom: 1px solid $color-primary;
+  }
+}
+
+.user-info {
+  margin: 10px;
+  text-align: center;
+}
+
+.content {
+  border: 2px solid $color-secondary;
+  font-size: 1.2em;
+  padding: 2.5em;
+  width: 100%;
+}
+
+.footer {
+  text-align: center;
+}
