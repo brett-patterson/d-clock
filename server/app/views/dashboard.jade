@@ -1,4 +1,10 @@
 extends base
 
+block head
+    script(type='text/javascript', src='/lib/react/react-with-addons.js')
+    script(type='text/javascript', src='/lib/react/JSXTransformer.js')
+
 block content
-    h1.text-center Dashboard
+    #dashboard
+
+    script(type='text/jsx', src='/js/dashboard.jsx')
