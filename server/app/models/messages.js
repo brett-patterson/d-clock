@@ -1,6 +1,7 @@
 'use strict';
 
 var Q = require('q'),
+    uuid = require('node-uuid'),
     users = require('./users'),
     config = require('../config'),
     db = require('orchestrate')(config.db.key);
@@ -32,6 +33,9 @@ var all = function (email) {
  */
 var add = function (email, message) {
     var deferred = Q.defer();
+
+    // Assign a randomly generated id to the message
+    message.id = uuid.v4();
 
     all(email).then(function (messages) {
         if (messages.length > 0) {
