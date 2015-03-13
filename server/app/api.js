@@ -7,18 +7,33 @@ var moment = require('moment'),
     messages = require('./models/messages'),
     users = require('./models/users');
 
+/**
+ * Helper to respond to an API request.
+ * @param {boolean} success - Whether or not the API request was successful
+ * @param {express.Response} res - The response object from the API request
+ * @param {string} info - Optional info to include in the response.
+ */
 function apiResponse(success, res, info) {
-    if (success) {
-        res.status(200);
-    } else {
-        res.status(400);
-    }
-
     if (info !== undefined) {
-        res.json(info);
+        if (success) {
+            res.status(200);
+        } else {
+            res.status(400);
+        }
+        res.send(info);
+    } else {
+        if (success) {
+            res.sendStatus(200);
+        } else {
+            res.sendStatus(400);
+        }
     }
 }
 
+/**
+ * Binds the API routes to an Express app.
+ * @param {express.App} app - The express app to bind routes to
+ */
 var api = function (app) {
     app.post('/api/auth-sign-in/', function (req, res, next) {
         var nextPage = req.body.nextPage,
@@ -51,11 +66,27 @@ var api = function (app) {
 
     app.post('/api/add-message/', middleware.requireApiUser, function (req, res) {
         messages.add(req.user.email, JSON.parse(req.body.message))
-            .then(function (result) {
-                apiResponse(result, res);
+            .then(function () {
+                apiResponse(true, res);
             }).fail(function (error) {
-                apiResponse(false, res, {error: error});
+                apiResponse(false, res, { error: error });
             });
+    });
+
+    app.post('/api/queue/', middleware.requireApiUser, function (req, res) {
+        messages.queue(req.user.email).then(function (result) {
+            apiResponse(true, res, result);
+        }).fail(function (error) {
+            apiResponse(false, res, { error: error });
+        });
+    });
+
+    app.post('/api/dequeue/', middleware.requireApiUser, function (req, res) {
+        messages.dequeue(req.user.email).then(function () {
+            apiResponse(true, res);
+        }).fail(function (error) {
+            apiResponse(false, res, { error: error });
+        });
     });
 
     app.ws('/api/messages/', function (ws, req) {

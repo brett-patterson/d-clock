@@ -5,6 +5,11 @@ var bcrypt = require('bcryptjs'),
     config = require('../config'),
     db = require('orchestrate')(config.db.key);
 
+/**
+ * Register a new user.
+ * @param {string} email - The user's email address
+ * @param {string} password - The user's password
+ */
 var register = function (email, password) {
     var deferred = Q.defer(),
         hash = bcrypt.hashSync(password),
@@ -32,6 +37,11 @@ var register = function (email, password) {
     return deferred.promise;
 };
 
+/**
+ * Authenticate a user.
+ * @param {string} email - The user's email address
+ * @param {string} password - The user's password
+ */
 var authenticate = function (email, password) {
     var deferred = Q.defer();
 
@@ -55,6 +65,10 @@ var authenticate = function (email, password) {
     return deferred.promise;
 };
 
+/**
+ * Get a user object.
+ * @param {string} email - The user's email address
+ */
 var get = function (email) {
     var deferred = Q.defer();
 

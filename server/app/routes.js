@@ -3,6 +3,10 @@
 var middleware = require('./middleware'),
     users = require('./models/users');
 
+/**
+ * Binds the public routes to an Express app.
+ * @param {express.App} app - The express app to bind routes to
+ */
 var routes = function (app) {
     app.use(function (req, res, next) {
         // Inject the user object into the locals of the response.

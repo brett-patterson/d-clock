@@ -3,6 +3,12 @@
 var basicAuth = require('basic-auth'),
     users = require('./models/users');
 
+/**
+ * Express middleware to require user authentication through Passport.
+ * @param {express.Request} req - Express request object
+ * @param {express.Response} res - Express response object
+ * @param {function} next - A function to continue to the next middleware.
+ */
 var requireUser = function (req, res, next) {
     if (req.user !== undefined) {
         next();
@@ -11,6 +17,13 @@ var requireUser = function (req, res, next) {
     }
 };
 
+/**
+ * Express middleware to require user authentication through either headers
+ * or Passport.
+ * @param {express.Request} req - Express request object
+ * @param {express.Response} res - Express response object
+ * @param {function} next - A function to continue to the next middleware.
+ */
 var requireApiUser = function (req, res, next) {
     function reqAuth() {
         if (req.user !== undefined) {
