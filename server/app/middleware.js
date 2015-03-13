@@ -26,13 +26,12 @@ var requireUser = function (req, res, next) {
  */
 var requireApiUser = function (req, res, next) {
     function reqAuth() {
-        if (req.user !== undefined) {
-            next();
-        } else {
+        if (req.user === undefined) {
             res.set('WWW-Authenticate',
                 'Basic realm=Authorization Required');
             res.sendStatus(401);
         }
+        next();
     }
 
     var auth = basicAuth(req);
@@ -47,6 +46,8 @@ var requireApiUser = function (req, res, next) {
         }).fail(function () {
             reqAuth();
         });
+    } else {
+        reqAuth();
     }
 };
 
