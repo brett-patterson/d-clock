@@ -28,6 +28,6 @@
     "ws": "^0.7.1"
   },
   "scripts": {
-    "start-dev": "sass --watch app/scss/:public/css/ & nodemon index.js"
+    "start-dev": "sass --watch app/scss/:public/css/ & jsx --extension jsx --watch app/jsx/ public/js/ & nodemon index.js"
   }
 }
