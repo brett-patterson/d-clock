@@ -1,0 +1,58 @@
+.dashboard-title {
+  text-align: center; }
+
+.dashboard-section .dashboard-section-title-wrapper {
+  position: relative; }
+  .dashboard-section .dashboard-section-title-wrapper .dashboard-section-title {
+    border-bottom: 1px solid #ed6b7c;
+    font-variant: small-caps;
+    margin-bottom: 0;
+    padding-bottom: 10px; }
+  .dashboard-section .dashboard-section-title-wrapper .dashboard-section-title:hover {
+    cursor: pointer; }
+  .dashboard-section .dashboard-section-title-wrapper .dashboard-section-title.section-open:before {
+    font-family: FontAwesome;
+    position: absolute;
+    top: 0;
+    content: '\f0d7';
+    left: -20px; }
+  .dashboard-section .dashboard-section-title-wrapper .dashboard-section-title.section-closed:before {
+    font-family: FontAwesome;
+    position: absolute;
+    top: 0;
+    content: '\f0da';
+    left: -15px; }
+.dashboard-section .dashboard-section-errors {
+  color: #e70000; }
+.dashboard-section .dashboard-section-content {
+  border-left: 1px dotted #bababa;
+  border-right: 1px dotted #bababa;
+  margin: 0 auto;
+  padding: 10px;
+  width: 95%; }
+
+.message-list {
+  table-layout: fixed;
+  width: 100%; }
+  .message-list .sent-cell {
+    text-align: center;
+    width: 10%; }
+  .message-list .target-cell {
+    text-align: center;
+    width: 20%; }
+  .message-list .message {
+    border-left: 2px solid #fff; }
+  .message-list .message:hover {
+    border-left-color: #ed6b7c;
+    cursor: pointer; }
+
+.message-complete {
+  color: #00a900; }
+
+.message-pending {
+  color: #efdb00; }
+
+.message-unknown {
+  color: #e70000; }
+
+/*# sourceMappingURL=dashboard.css.map */

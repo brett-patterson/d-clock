@@ -25,47 +25,12 @@ var Dashboard = React.createClass({
     render: function () {
         return (
             <div className='dashboard'>
-                <h1>Dashboard</h1>
+                <h1 className='dashboard-title'>Dashboard</h1>
                 <MessageList />
             </div>
         );
     }
 });
-
-/**
- * A React component representing a message. Intended for use inside of a
- * MessageList.
- */
-var Message = React.createClass({
-    getInitialState: function () {
-        var state = {};
-
-        if (this.props.data !== undefined) {
-            $.extend(state, this.props.data);
-        }
-
-        if (this.props.sent !== undefined) {
-            state.sent = this.props.sent;
-        }
-
-        return state;
-    },
-
-    componentWillReceiveProps: function(nextProps) {
-        var newState = {};
-        $.extend(newState, nextProps.data, { sent: nextProps.sent });
-        this.setState(newState);
-    },
-
-    render: function () {
-        var state = this.state;
-        var displaySent = triStateEvaluate(this.state.sent, 'Sent', 'Pending', 'Unknown');
-        return (
-            <li>{state.html} - {displaySent}</li>
-        );
-    }
-});
-
 
 /**
  * A React component representing a list of messages.
@@ -113,6 +78,19 @@ var MessageList = React.createClass({
         }.bind(this));
     },
 
+    sectionTitleClicked: function (event) {
+        var target = $(event.target);
+        var section = $(target.attr('data-section'));
+
+        if (target.hasClass('section-open')) {
+            target.removeClass('section-open').addClass('section-closed');
+            section.addClass('collapse');
+        } else {
+            target.removeClass('section-closed').addClass('section-open');
+            section.removeClass('collapse');
+        }
+    },
+
     render: function () {
         var messageNodes = this.state.messages.map(function (message) {
             var sent;
@@ -146,17 +124,77 @@ var MessageList = React.createClass({
         }
 
         return (
-            <div className='messageContainer'>
-                <div className='messageErrors'>
-                    {errorNodes}
+            <div className='dashboard-section'>
+                <div className='dashboard-section-title-wrapper'>
+                    <h2 className='dashboard-section-title section-open'
+                        onClick={this.sectionTitleClicked}
+                        data-section='#message-section'>Messages</h2>
                 </div>
-                <ul className='messageList'>
-                    {messageNodes}
-                </ul>
+                <div className='dashboard-section-content' id='message-section'>
+                    <div className='dashboard-section-errors'>
+                        {errorNodes}
+                    </div>
+                    <table className='table message-list'>
+                        <thead>
+                            <tr>
+                                <th>Content</th>
+                                <th className='target-cell'>Target Date</th>
+                                <th className='sent-cell'>Sent?</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {messageNodes}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         );
     }
-})
+});
+
+/**
+ * A React component representing a message. Intended for use inside of a
+ * MessageList.
+ */
+var Message = React.createClass({
+    getInitialState: function () {
+        var state = {};
+
+        if (this.props.data !== undefined) {
+            $.extend(state, this.props.data);
+        }
+
+        if (this.props.sent !== undefined) {
+            state.sent = this.props.sent;
+        }
+
+        return state;
+    },
+
+    componentWillReceiveProps: function(nextProps) {
+        var newState = {};
+        $.extend(newState, nextProps.data, { sent: nextProps.sent });
+        this.setState(newState);
+    },
+
+    render: function () {
+        var state = this.state;
+        var displaySent = triStateEvaluate(this.state.sent,
+            <i className='fa fa-lg fa-check-circle message-complete'></i>,
+            <i className='fa fa-lg fa-dot-circle-o message-pending'></i>,
+            <i className='fa fa-lg fa-question-circle message-unknown'></i>);
+        return (
+            <tr className='message'>
+                <td>{state.html}</td>
+                <td className='target-cell'>{state.target}</td>
+                <td className='sent-cell'>{displaySent}</td>
+            </tr>
+        );
+    }
+});
+
+// Handle click events on a touch device
+React.initializeTouchEvents(true);
 
 React.render(
     <Dashboard />,
