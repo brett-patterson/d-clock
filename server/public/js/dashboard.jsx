@@ -33,6 +33,40 @@ var Dashboard = React.createClass({
 });
 
 /**
+ * A React component representing a section in the dashboard.
+ */
+var DashboardSection = React.createClass({
+    sectionTitleClicked: function (event) {
+        var target = $(event.target);
+        var section = $('#' + this.props.sectionID);
+
+        if (target.hasClass('section-open')) {
+            target.removeClass('section-open').addClass('section-closed');
+            section.addClass('collapse');
+        } else {
+            target.removeClass('section-closed').addClass('section-open');
+            section.removeClass('collapse');
+        }
+    },
+
+    render: function () {
+        return (
+            <div className='dashboard-section'>
+                <div className='dashboard-section-title-wrapper'>
+                    <h2 className='dashboard-section-title section-open'
+                        onClick={this.sectionTitleClicked}
+                        data-section={this.props.sectionID}>Messages</h2>
+                </div>
+                <div className='dashboard-section-content'
+                     id={this.props.sectionID}>
+                    {this.props.sectionContent}
+                </div>
+            </div>
+        );
+    }
+});
+
+/**
  * A React component representing a list of messages.
  */
 var MessageList = React.createClass({
@@ -78,19 +112,6 @@ var MessageList = React.createClass({
         }.bind(this));
     },
 
-    sectionTitleClicked: function (event) {
-        var target = $(event.target);
-        var section = $(target.attr('data-section'));
-
-        if (target.hasClass('section-open')) {
-            target.removeClass('section-open').addClass('section-closed');
-            section.addClass('collapse');
-        } else {
-            target.removeClass('section-closed').addClass('section-open');
-            section.removeClass('collapse');
-        }
-    },
-
     render: function () {
         var messageNodes = this.state.messages.map(function (message) {
             var sent;
@@ -123,32 +144,28 @@ var MessageList = React.createClass({
             }
         }
 
-        return (
-            <div className='dashboard-section'>
-                <div className='dashboard-section-title-wrapper'>
-                    <h2 className='dashboard-section-title section-open'
-                        onClick={this.sectionTitleClicked}
-                        data-section='#message-section'>Messages</h2>
+        var sectionContent = (
+            <div>
+                <div className='dashboard-section-errors'>
+                    {errorNodes}
                 </div>
-                <div className='dashboard-section-content' id='message-section'>
-                    <div className='dashboard-section-errors'>
-                        {errorNodes}
-                    </div>
-                    <table className='table message-list'>
-                        <thead>
-                            <tr>
-                                <th>Content</th>
-                                <th className='target-cell'>Target Date</th>
-                                <th className='sent-cell'>Sent?</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {messageNodes}
-                        </tbody>
-                    </table>
-                </div>
+                <table className='table message-list'>
+                    <thead>
+                        <tr>
+                            <th>Content</th>
+                            <th className='target-cell'>Target Date</th>
+                            <th className='sent-cell'>Sent?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {messageNodes}
+                    </tbody>
+                </table>
             </div>
         );
+
+        return (<DashboardSection sectionID='messages-section'
+                                  sectionContent={sectionContent} />);
     }
 });
 
