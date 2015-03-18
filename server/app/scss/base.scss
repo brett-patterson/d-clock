@@ -17,9 +17,7 @@
 
   &:hover,
   &:focus,
-  &.focus,
-  &:active,
-  &.active {
+  &:active {
     @include primary-dark;
   }
 }

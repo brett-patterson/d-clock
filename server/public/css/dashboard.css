@@ -1,3 +1,47 @@
+.btn-primary {
+  color: #fff;
+  background-color: #ed6b7c;
+  border-color: #ed6b7c; }
+  .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+    color: #fff;
+    background-color: #ea5468;
+    border-color: #ea5468; }
+
+.top-container {
+  margin: 0 auto;
+  width: 60%; }
+
+.header {
+  margin-bottom: 20px;
+  margin-top: 20px; }
+
+.header-title {
+  color: #ed6b7c;
+  display: inline-block; }
+  .header-title h1 {
+    margin: 0; }
+
+.top-nav {
+  display: inline-block;
+  font-size: 1.5em; }
+  .top-nav a {
+    color: #ed6b7c; }
+  .top-nav li:hover {
+    border-bottom: 1px solid #ed6b7c; }
+
+.user-info {
+  margin: 10px;
+  text-align: center; }
+
+.content {
+  border: 2px solid #85ede0;
+  font-size: 1.2em;
+  padding: 2.5em;
+  width: 100%; }
+
+.footer {
+  text-align: center; }
+
 .dashboard-title {
   text-align: center; }
 
@@ -55,5 +99,20 @@
 
 .message-unknown {
   color: #e70000; }
+
+.new-message-btn {
+  border: none;
+  color: #ed6b7c; }
+  .new-message-btn:hover, .new-message-btn:focus, .new-message-btn:active {
+    border: none;
+    color: #ea5468; }
+
+.dashboard-modal .modal-header {
+  color: #fff;
+  background-color: #ed6b7c;
+  border-color: #ed6b7c; }
+
+.modal-backdrop.in {
+  height: 100%; }
 
 /*# sourceMappingURL=dashboard.css.map */

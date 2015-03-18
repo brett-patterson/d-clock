@@ -1,3 +1,4 @@
+@import 'base';
 @import 'colors';
 
 $dashboard-section-border: #bababa;
@@ -6,6 +7,8 @@ $dashboard-message-complete: #00a900;
 $dashboard-message-pending: #efdb00;
 $dashboard-message-hover-normal: #fff;
 $dashboard-message-hover-selected: $color-primary;
+$dashboard-modal-title-text: #fff;
+$dashboard-modal-title-background: $color-primary;
 
 @mixin fa-icon-before {
   font-family: FontAwesome;
@@ -95,4 +98,27 @@ $dashboard-message-hover-selected: $color-primary;
 
 .message-unknown {
   color: $dashboard-section-error;
+}
+
+.new-message-btn {
+  border: none;
+  color: $color-primary;
+
+  &:hover,
+  &:focus,
+  &:active {
+    border: none;
+    color: $color-primary-dark;
+  }
+}
+
+.dashboard-modal {
+
+  .modal-header {
+    @include primary;
+  }
+}
+
+.modal-backdrop.in {
+  height: 100%;
 }

@@ -5,6 +5,8 @@ define(['react', 'jquery'], function (React, jQuery) {
      * A React component representing a section in the dashboard.
      */
     return React.createClass({
+        displayName: 'DashboardSection',
+
         sectionTitleClicked: function (event) {
             var target = jQuery(event.target);
             var section = jQuery('#' + this.props.sectionID);

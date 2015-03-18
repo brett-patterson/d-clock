@@ -5,6 +5,8 @@ define(['react', 'messageList'], function (React, MessageList) {
      * The main React component for the dashboard.
      */
     return React.createClass({
+        displayName: 'Dashboard',
+
         render: function () {
             return (
                 <div className='dashboard'>

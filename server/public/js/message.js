@@ -26,6 +26,8 @@ define(['react', 'jquery'], function (React, jQuery) {
      * MessageList.
      */
     return React.createClass({
+        displayName: 'Message',
+
         getInitialState: function () {
             var state = {};
 
