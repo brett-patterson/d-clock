@@ -53,7 +53,7 @@ define(['react', 'jquery'], function (React, jQuery) {
                 <i className='fa fa-lg fa-dot-circle-o message-pending'></i>,
                 <i className='fa fa-lg fa-question-circle message-unknown'></i>);
             return (
-                <tr className='message'>
+                <tr className='message' onClick={this.props.onClick}>
                     <td>{state.html}</td>
                     <td className='target-cell'>{state.target}</td>
                     <td className='sent-cell'>{displaySent}</td>

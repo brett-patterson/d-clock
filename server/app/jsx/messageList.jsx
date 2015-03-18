@@ -1,7 +1,7 @@
 'use strict';
 
-define(['react', 'jquery', 'dashboardSection', 'message'],
-        function (React, jQuery, DashboardSection, Message) {
+define(['react', 'jquery', 'dashboardSection', 'message', 'modal'],
+        function (React, jQuery, DashboardSection, Message, Modal) {
     /**
      * A React component representing a list of messages.
      */
@@ -48,6 +48,10 @@ define(['react', 'jquery', 'dashboardSection', 'message'],
             }.bind(this));
         },
 
+        newMessageHandler: function (event) {
+            console.log('new message');
+        },
+
         render: function () {
             var messageNodes = this.state.messages.map(function (message) {
                 var sent;
@@ -64,9 +68,8 @@ define(['react', 'jquery', 'dashboardSection', 'message'],
                     }
                 }
 
-                return (
-                    <Message key={message.id} data={message} sent={sent} />
-                );
+                var messageEl = <Message data={message} sent={sent} />;
+                return <Modal key={message.id} trigger={messageEl} />;
             }, this);
 
             var errorNodes = [];
@@ -80,11 +83,32 @@ define(['react', 'jquery', 'dashboardSection', 'message'],
                 }
             }
 
+            var newMessageTrigger = (
+                <button>New Message</button>
+            );
+
+            var newMessageTitle = <h4 className='modal-title'>New Message</h4>
+            var newMessageBody = (<div>
+                
+            </div>);
+            var newMessageFooter = (<div>
+                <button type='button' className='btn btn-danger'
+                        data-dismiss='modal'>Cancel</button>
+                <button type='button' className='btn btn-success'
+                        onClick={this.newMessageHandler}>Send</button>
+            </div>);
+
             var sectionContent = (
                 <div>
                     <div className='dashboard-section-errors'>
                         {errorNodes}
                     </div>
+
+                    <Modal trigger={newMessageTrigger}
+                           header={newMessageTitle}
+                           body={newMessageBody}
+                           footer={newMessageFooter} />
+
                     <table className='table message-list'>
                         <thead>
                             <tr>

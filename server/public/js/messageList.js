@@ -1,7 +1,7 @@
 'use strict';
 
-define(['react', 'jquery', 'dashboardSection', 'message'],
-        function (React, jQuery, DashboardSection, Message) {
+define(['react', 'jquery', 'dashboardSection', 'message', 'modal'],
+        function (React, jQuery, DashboardSection, Message, Modal) {
     /**
      * A React component representing a list of messages.
      */
@@ -48,6 +48,10 @@ define(['react', 'jquery', 'dashboardSection', 'message'],
             }.bind(this));
         },
 
+        newMessageHandler: function (event) {
+            console.log('new message');
+        },
+
         render: function () {
             var messageNodes = this.state.messages.map(function (message) {
                 var sent;
@@ -64,9 +68,8 @@ define(['react', 'jquery', 'dashboardSection', 'message'],
                     }
                 }
 
-                return (
-                    React.createElement(Message, {key: message.id, data: message, sent: sent})
-                );
+                var messageEl = React.createElement(Message, {data: message, sent: sent});
+                return React.createElement(Modal, {key: message.id, trigger: messageEl});
             }, this);
 
             var errorNodes = [];
@@ -80,11 +83,32 @@ define(['react', 'jquery', 'dashboardSection', 'message'],
                 }
             }
 
+            var newMessageTrigger = (
+                React.createElement("button", null, "New Message")
+            );
+
+            var newMessageTitle = React.createElement("h4", {className: "modal-title"}, "New Message")
+            var newMessageBody = (React.createElement("div", null
+                
+            ));
+            var newMessageFooter = (React.createElement("div", null, 
+                React.createElement("button", {type: "button", className: "btn btn-danger", 
+                        "data-dismiss": "modal"}, "Cancel"), 
+                React.createElement("button", {type: "button", className: "btn btn-success", 
+                        onClick: this.newMessageHandler}, "Send")
+            ));
+
             var sectionContent = (
                 React.createElement("div", null, 
                     React.createElement("div", {className: "dashboard-section-errors"}, 
                         errorNodes
                     ), 
+
+                    React.createElement(Modal, {trigger: newMessageTrigger, 
+                           header: newMessageTitle, 
+                           body: newMessageBody, 
+                           footer: newMessageFooter}), 
+
                     React.createElement("table", {className: "table message-list"}, 
                         React.createElement("thead", null, 
                             React.createElement("tr", null, 

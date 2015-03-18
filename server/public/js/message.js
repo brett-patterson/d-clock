@@ -53,7 +53,7 @@ define(['react', 'jquery'], function (React, jQuery) {
                 React.createElement("i", {className: "fa fa-lg fa-dot-circle-o message-pending"}),
                 React.createElement("i", {className: "fa fa-lg fa-question-circle message-unknown"}));
             return (
-                React.createElement("tr", {className: "message"}, 
+                React.createElement("tr", {className: "message", onClick: this.props.onClick}, 
                     React.createElement("td", null, state.html), 
                     React.createElement("td", {className: "target-cell"}, state.target), 
                     React.createElement("td", {className: "sent-cell"}, displaySent)
