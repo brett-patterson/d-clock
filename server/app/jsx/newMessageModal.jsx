@@ -71,7 +71,7 @@ define(['react', 'jquery', 'reactBootstrap', 'dateTimeInput'],
 
             return (
                 <ModalTrigger modal={content}>
-                    <Button className='fa fa-2x fa-plus-square new-message-btn pull-right' />
+                    <Button className='fa fa-2x fa-pencil-square-o new-message-btn pull-right' />
                 </ModalTrigger>
             );
         }

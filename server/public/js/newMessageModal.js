@@ -71,7 +71,7 @@ define(['react', 'jquery', 'reactBootstrap', 'dateTimeInput'],
 
             return (
                 React.createElement(ModalTrigger, {modal: content}, 
-                    React.createElement(Button, {className: "fa fa-2x fa-plus-square new-message-btn pull-right"})
+                    React.createElement(Button, {className: "fa fa-2x fa-pencil-square-o new-message-btn pull-right"})
                 )
             );
         }
