@@ -1,5 +1,29 @@
 @import 'colors';
 
+@mixin primary {
+  color: $color-white;
+  background-color: $color-primary;
+  border-color: $color-primary;
+}
+
+@mixin primary-dark {
+  color: $color-white;
+  background-color: $color-primary-dark;
+  border-color: $color-primary-dark;
+}
+
+.btn-primary {
+  @include primary;
+
+  &:hover,
+  &:focus,
+  &.focus,
+  &:active,
+  &.active {
+    @include primary-dark;
+  }
+}
+
 .top-container {
   margin: 0 auto;
   width: 60%;

@@ -1,3 +1,12 @@
+.btn-primary {
+  color: #fff;
+  background-color: #ed6b7c;
+  border-color: #ed6b7c; }
+  .btn-primary:hover, .btn-primary:focus, .btn-primary.focus, .btn-primary:active, .btn-primary.active {
+    color: #fff;
+    background-color: #ea5468;
+    border-color: #ea5468; }
+
 .top-container {
   margin: 0 auto;
   width: 60%; }
