@@ -27,6 +27,7 @@ define(['react', 'jquery', 'reactBootstrap', 'dashboardSection', 'message',
         },
 
         fetchMessages: function () {
+            console.log('fetching');
             jQuery.post('/api/messages/').done(function (result) {
                 this.setState(React.addons.update(this.state, {
                     messages: { $set: result },
@@ -88,7 +89,7 @@ define(['react', 'jquery', 'reactBootstrap', 'dashboardSection', 'message',
                         {errorNodes}
                     </div>
 
-                    <NewMessageModal />
+                    <NewMessageModal messageDelegate={this} />
 
                     <ReactBootstrap.Table className='table message-list'>
                         <thead>

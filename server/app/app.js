@@ -26,7 +26,7 @@ app.set('view engine', 'jade');
 // Set application middleware
 app.use(cookieParser());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(path.dirname(__dirname), 'public')));
 app.use(session({
     secret: 'keyboard cat',

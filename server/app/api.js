@@ -65,12 +65,11 @@ var api = function (app) {
     });
 
     app.post('/api/add-message/', middleware.requireApiUser, function (req, res) {
-        messages.add(req.user.email, JSON.parse(req.body.message))
-            .then(function () {
-                apiResponse(true, res);
-            }).fail(function (error) {
-                apiResponse(false, res, { error: error });
-            });
+        messages.add(req.user.email, req.body.message).then(function () {
+            apiResponse(true, res);
+        }).fail(function (error) {
+            apiResponse(false, res, { error: error });
+        });
     });
 
     app.post('/api/queue/', middleware.requireApiUser, function (req, res) {

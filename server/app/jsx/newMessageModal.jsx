@@ -18,6 +18,20 @@ define(['react', 'jquery', 'reactBootstrap', 'dateTimeInput'],
             var target = this.refs.dateTimeInput.getValue();
             var content = this.refs.contentInput.getValue();
 
+            jQuery.post('/api/add-message/', {
+                message: {
+                    html: content,
+                    target: target.format('MM-DD-YYYY HH:mm'),
+                    recurring: 1
+                }
+            }).done(function () {
+                if (this.props.messageDelegate) {
+                    this.props.messageDelegate.fetchMessages();
+                }
+            }.bind(this)).fail(function () {
+                // TODO: Handle message creation fail
+            });
+
             this.props.onRequestHide(event);
         },
 
@@ -52,8 +66,11 @@ define(['react', 'jquery', 'reactBootstrap', 'dateTimeInput'],
         displayName: 'NewMessageModal',
 
         render: function () {
+            var content = <NewMessageModalContent
+                            messageDelegate={this.props.messageDelegate} />;
+
             return (
-                <ModalTrigger modal={<NewMessageModalContent />}>
+                <ModalTrigger modal={content}>
                     <Button className='fa fa-2x fa-plus-square new-message-btn pull-right' />
                 </ModalTrigger>
             );
