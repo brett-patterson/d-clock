@@ -9,14 +9,26 @@ define(['react', 'jquery', 'bootstrap'], function (React, jQuery) {
      */
     var ModalContent = React.createClass({
         render: function () {
+            var header, body, footer;
+            header = body = footer = undefined;
+            if (this.props.header !== undefined) {
+                header = <div className='modal-header'>{this.props.header}</div>;
+            }
+            if (this.props.body !== undefined) {
+                body = <div className='modal-body'>{this.props.body}</div>;
+            }
+            if (this.props.footer !== undefined) {
+                footer = <div className='modal-footer'>{this.props.footer}</div>;
+            }
+
             return (
                 <div className='modal fade' role='dialog' aria-hidden='true'
                      id={this.props.id} onClick={this.handleClick}>
                      <div className='modal-dialog'>
                         <div className='modal-content'>
-                            <div className='modal-header'>{this.props.header}</div>
-                            <div className='modal-body'>{this.props.body}</div>
-                            <div className='modal-footer'>{this.props.footer}</div>
+                            {header}
+                            {body}
+                            {footer}
                         </div>
                      </div>
                 </div>
@@ -37,9 +49,9 @@ define(['react', 'jquery', 'bootstrap'], function (React, jQuery) {
 
         getDefaultProps: function () {
             return {
-                header: <span></span>,
-                body: <span></span>,
-                footer: <span></span>,
+                header: undefined,
+                body: undefined,
+                footer: undefined,
                 preRender: false
             };
         },

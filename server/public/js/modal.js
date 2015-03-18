@@ -9,14 +9,26 @@ define(['react', 'jquery', 'bootstrap'], function (React, jQuery) {
      */
     var ModalContent = React.createClass({displayName: "ModalContent",
         render: function () {
+            var header, body, footer;
+            header = body = footer = undefined;
+            if (this.props.header !== undefined) {
+                header = React.createElement("div", {className: "modal-header"}, this.props.header);
+            }
+            if (this.props.body !== undefined) {
+                body = React.createElement("div", {className: "modal-body"}, this.props.body);
+            }
+            if (this.props.footer !== undefined) {
+                footer = React.createElement("div", {className: "modal-footer"}, this.props.footer);
+            }
+
             return (
                 React.createElement("div", {className: "modal fade", role: "dialog", "aria-hidden": "true", 
                      id: this.props.id, onClick: this.handleClick}, 
                      React.createElement("div", {className: "modal-dialog"}, 
                         React.createElement("div", {className: "modal-content"}, 
-                            React.createElement("div", {className: "modal-header"}, this.props.header), 
-                            React.createElement("div", {className: "modal-body"}, this.props.body), 
-                            React.createElement("div", {className: "modal-footer"}, this.props.footer)
+                            header, 
+                            body, 
+                            footer
                         )
                      )
                 )
@@ -37,9 +49,9 @@ define(['react', 'jquery', 'bootstrap'], function (React, jQuery) {
 
         getDefaultProps: function () {
             return {
-                header: React.createElement("span", null),
-                body: React.createElement("span", null),
-                footer: React.createElement("span", null),
+                header: undefined,
+                body: undefined,
+                footer: undefined,
                 preRender: false
             };
         },
