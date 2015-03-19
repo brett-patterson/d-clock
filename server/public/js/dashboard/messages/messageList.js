@@ -1,9 +1,13 @@
 'use strict';
 
-define(['react', 'jquery', 'reactBootstrap', 'moment',
-        'dashboard/dashboardSection',
-        'dashboard/messages/editMessageModal',
-        'dashboard/messages/newMessageModal'
+define([
+    'react',
+    'jquery',
+    'reactBootstrap',
+    'moment',
+    'dashboard/dashboardSection',
+    'dashboard/messages/editMessageModal',
+    'dashboard/messages/newMessageModal'
 ], function (React, jQuery, ReactBootstrap, Moment, DashboardSection,
              EditMessageModal, NewMessageModal) {
     /**

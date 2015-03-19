@@ -1,6 +1,9 @@
 'use strict';
 
-define(['react', 'dashboard/messages/messageList'], function (React, MessageList) {
+define([
+    'react',
+    'dashboard/messages/messageList'
+], function (React, MessageList) {
     /**
      * The main React component for the dashboard.
      */

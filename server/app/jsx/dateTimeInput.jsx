@@ -1,7 +1,11 @@
 'use strict';
 
-define(['react', 'jquery', 'reactBootstrap', 'dateTimePicker'],
-    function (React, jQuery, ReactBootstrap) {
+define([
+    'react',
+    'jquery',
+    'reactBootstrap',
+    'dateTimePicker'
+], function (React, jQuery, ReactBootstrap) {
     var Input = ReactBootstrap.Input;
 
     /**

@@ -1,6 +1,9 @@
 'use strict';
 
-define(['react', 'jquery'], function (React, jQuery) {
+define([
+    'react',
+    'jquery'
+], function (React, jQuery) {
     /**
      * A React component representing a section in the dashboard.
      */

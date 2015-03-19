@@ -20,8 +20,11 @@ function triStateEvaluate(value, truthy, falsy, undef) {
     return falsy;
 }
 
-define(['react', 'jquery', 'reactBootstrap'],
-        function (React, jQuery, ReactBootstrap) {
+define([
+    'react',
+    'jquery',
+    'reactBootstrap'
+], function (React, jQuery, ReactBootstrap) {
     /**
      * A React component representing a message. Intended for use inside of a
      * MessageList.

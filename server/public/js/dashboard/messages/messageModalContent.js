@@ -1,7 +1,10 @@
 'use strict';
 
-define(['react', 'reactBootstrap', 'dateTimeInput'],
-        function (React, ReactBootstrap, DateTimeInput) {
+define([
+    'react',
+    'reactBootstrap',
+    'dateTimeInput'
+], function (React, ReactBootstrap, DateTimeInput) {
 
     var Modal = ReactBootstrap.Modal;
     var Input = ReactBootstrap.Input;

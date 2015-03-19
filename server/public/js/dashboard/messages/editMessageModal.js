@@ -1,9 +1,12 @@
 'use strict';
 
-define(['react', 'jquery', 'reactBootstrap',
-        'dashboard/messages/messageModalContent',
-        'dashboard/messages/message'],
-    function (React, jQuery, ReactBootstrap, MessageModalContent, Message) {
+define([
+    'react',
+    'jquery',
+    'reactBootstrap',
+    'dashboard/messages/messageModalContent',
+    'dashboard/messages/message'
+], function (React, jQuery, ReactBootstrap, MessageModalContent, Message) {
 
     var ModalTrigger = ReactBootstrap.ModalTrigger;
     var Button = ReactBootstrap.Button;
