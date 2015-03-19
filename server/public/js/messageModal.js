@@ -1,10 +1,12 @@
 'use strict';
 
-define(['react', 'jquery', 'reactBootstrap', 'messageModalContent'],
-    function (React, jQuery, ReactBootstrap, MessageModalContent) {
+define(['react', 'jquery', 'reactBootstrap', 'dateTimeInput'],
+    function (React, jQuery, ReactBootstrap, DateTimeInput) {
 
+    var Modal = ReactBootstrap.Modal;
     var ModalTrigger = ReactBootstrap.ModalTrigger;
     var Button = ReactBootstrap.Button;
+    var Input = ReactBootstrap.Input;
 
     /**
      * A React component representing a new message modal dialog content.
@@ -13,12 +15,12 @@ define(['react', 'jquery', 'reactBootstrap', 'messageModalContent'],
         displayName: 'NewMessageModalContent',
 
         onSend: function (event) {
-            var target = this.refs.messageModal.getDateTime();
-            var html = this.refs.messageModal.getHtml();
+            var target = this.refs.dateTimeInput.getValue();
+            var content = this.refs.contentInput.getValue();
 
             jQuery.post('/api/add-message/', {
                 message: {
-                    html: html,
+                    html: content,
                     target: target.format('MM-DD-YYYY HH:mm'),
                     recurring: 1
                 }
@@ -35,10 +37,22 @@ define(['react', 'jquery', 'reactBootstrap', 'messageModalContent'],
 
         render: function () {
             return (
-                React.createElement(MessageModalContent, React.__spread({ref: "messageModal", title: "New Message"}, 
-                    this.props), 
-                    React.createElement(Button, {onClick: this.props.onRequestHide}, "Close"), 
-                    React.createElement(Button, {bsStyle: "primary", onClick: this.onSend}, "Send")
+                React.createElement(Modal, React.__spread({},  this.props, {closeButton: false, backdrop: "static", 
+                       className: "dashboard-modal", title: "Edit Message"}), 
+
+                    React.createElement("div", {className: "modal-body"}, 
+                        React.createElement("form", {className: "form"}, 
+                            React.createElement(DateTimeInput, {ref: "dateTimeInput"}), 
+                            React.createElement(Input, {ref: "contentInput", 
+                                   type: "textarea", label: "Content"})
+                        )
+                    ), 
+
+                    React.createElement("div", {className: "modal-footer"}, 
+                        React.createElement(Button, {onClick: this.props.onRequestHide}, "Close"), 
+                        React.createElement(Button, {bsStyle: "primary", onClick: this.onSave}, "Save")
+                    )
+
                 )
             );
         }

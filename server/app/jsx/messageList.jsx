@@ -1,9 +1,9 @@
 'use strict';
 
-define(['react', 'jquery', 'reactBootstrap', 'dashboardSection', 'message',
-        'newMessageModal'],
-        function (React, jQuery, ReactBootstrap, DashboardSection, Message,
-                  NewMessageModal) {
+define(['react', 'jquery', 'reactBootstrap', 'moment', 'dashboardSection',
+        'editMessageModal', 'newMessageModal'],
+        function (React, jQuery, ReactBootstrap, Moment, DashboardSection,
+                  EditMessageModal, NewMessageModal) {
     /**
      * A React component representing a list of messages.
      */
@@ -28,8 +28,12 @@ define(['react', 'jquery', 'reactBootstrap', 'dashboardSection', 'message',
 
         fetchMessages: function () {
             jQuery.post('/api/messages/').done(function (result) {
+                var messages = result.map(function (message) {
+                    message.target = Moment(message.target, 'MM-DD-YYYY HH:mm');
+                    return message;
+                });
                 this.setState(React.addons.update(this.state, {
-                    messages: { $set: result },
+                    messages: { $set: messages },
                     error: { $merge: { messages: false } }
                 }));
             }.bind(this)).fail(function () {
@@ -68,7 +72,8 @@ define(['react', 'jquery', 'reactBootstrap', 'dashboardSection', 'message',
                     }
                 }
 
-                return <Message key={message.id} data={message} sent={sent} />;
+                return <EditMessageModal key={message.id} message={message}
+                                         sent={sent} />;
             }, this);
 
             var errorNodes = [];

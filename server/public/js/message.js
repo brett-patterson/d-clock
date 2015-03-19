@@ -63,7 +63,7 @@ define(['react', 'jquery', 'reactBootstrap'],
             return (
                 React.createElement("tr", {className: "message", onClick: this.props.onClick}, 
                     React.createElement("td", null, state.html), 
-                    React.createElement("td", {className: "target-cell"}, state.target), 
+                    React.createElement("td", {className: "target-cell"}, state.target.format('MM-DD-YYYY HH:mm')), 
                     React.createElement("td", {className: "sent-cell"}, 
                         React.createElement(OverlayTrigger, {placement: "right", 
                             overlay: React.createElement(Tooltip, null, sentText)}, 

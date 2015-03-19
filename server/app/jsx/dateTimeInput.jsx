@@ -19,6 +19,13 @@ define(['react', 'jquery', 'reactBootstrap', 'dateTimePicker'],
             return undefined;
         },
 
+        setValue: function (value) {
+            if (this.refs.picker) {
+                jQuery(this.refs.picker.getDOMNode())
+                    .data('DateTimePicker').date(value);
+            }
+        },
+
         componentDidMount: function () {
             jQuery(this.refs.picker.getDOMNode()).datetimepicker({
                 inline: true,

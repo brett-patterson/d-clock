@@ -63,7 +63,7 @@ define(['react', 'jquery', 'reactBootstrap'],
             return (
                 <tr className='message' onClick={this.props.onClick}>
                     <td>{state.html}</td>
-                    <td className='target-cell'>{state.target}</td>
+                    <td className='target-cell'>{state.target.format('MM-DD-YYYY HH:mm')}</td>
                     <td className='sent-cell'>
                         <OverlayTrigger placement='right'
                             overlay={<Tooltip>{sentText}</Tooltip>}>

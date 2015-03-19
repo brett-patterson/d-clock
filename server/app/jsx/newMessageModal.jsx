@@ -1,12 +1,10 @@
 'use strict';
 
-define(['react', 'jquery', 'reactBootstrap', 'dateTimeInput'],
-    function (React, jQuery, ReactBootstrap, DateTimeInput) {
+define(['react', 'jquery', 'reactBootstrap', 'messageModalContent'],
+    function (React, jQuery, ReactBootstrap, MessageModalContent) {
 
-    var Modal = ReactBootstrap.Modal;
     var ModalTrigger = ReactBootstrap.ModalTrigger;
     var Button = ReactBootstrap.Button;
-    var Input = ReactBootstrap.Input;
 
     /**
      * A React component representing a new message modal dialog content.
@@ -15,12 +13,12 @@ define(['react', 'jquery', 'reactBootstrap', 'dateTimeInput'],
         displayName: 'NewMessageModalContent',
 
         onSend: function (event) {
-            var target = this.refs.dateTimeInput.getValue();
-            var content = this.refs.contentInput.getValue();
+            var target = this.refs.messageModal.getDateTime();
+            var html = this.refs.messageModal.getHtml();
 
             jQuery.post('/api/add-message/', {
                 message: {
-                    html: content,
+                    html: html,
                     target: target.format('MM-DD-YYYY HH:mm'),
                     recurring: 1
                 }
@@ -37,23 +35,11 @@ define(['react', 'jquery', 'reactBootstrap', 'dateTimeInput'],
 
         render: function () {
             return (
-                <Modal {...this.props} closeButton={false} backdrop='static'
-                       className='dashboard-modal' title='New Message'>
-
-                    <div className='modal-body'>
-                        <form className='form'>
-                            <DateTimeInput ref='dateTimeInput' />
-                            <Input ref='contentInput'
-                                   type='textarea' label='Content' />
-                        </form>
-                    </div>
-
-                    <div className='modal-footer'>
-                        <Button onClick={this.props.onRequestHide}>Close</Button>
-                        <Button bsStyle='primary' onClick={this.onSend}>Send</Button>
-                    </div>
-
-                </Modal>
+                <MessageModalContent ref='messageModal' title='New Message'
+                    {...this.props}>
+                    <Button onClick={this.props.onRequestHide}>Close</Button>
+                    <Button bsStyle='primary' onClick={this.onSend}>Send</Button>
+                </MessageModalContent>
             );
         }
     });
