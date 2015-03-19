@@ -27,7 +27,6 @@ define(['react', 'jquery', 'reactBootstrap', 'dashboardSection', 'message',
         },
 
         fetchMessages: function () {
-            console.log('fetching');
             jQuery.post('/api/messages/').done(function (result) {
                 this.setState(React.addons.update(this.state, {
                     messages: { $set: result },
