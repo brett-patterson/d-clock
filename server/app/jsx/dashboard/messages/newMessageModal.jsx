@@ -28,7 +28,7 @@ define([
                 }
             }).done(function () {
                 if (this.props.messageDelegate) {
-                    this.props.messageDelegate.fetchMessages();
+                    this.props.messageDelegate.updateMessages();
                 }
             }.bind(this)).fail(function () {
                 // TODO: Handle message creation fail

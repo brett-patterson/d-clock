@@ -28,8 +28,12 @@ define([
         },
 
         componentDidMount: function () {
-            this.fetchMessages();
+            this.updateMessages();
+        },
+
+        updateMessages: function () {
             this.fetchQueue();
+            this.fetchMessages();
         },
 
         fetchMessages: function () {
@@ -49,7 +53,7 @@ define([
             }.bind(this));
         },
 
-        fetchQueue: function () {
+        fetchQueue: function (callback) {
             jQuery.post('/api/queue/').done(function (result) {
                 this.setState(React.addons.update(this.state, {
                     queue: { $set: result },
