@@ -23,8 +23,9 @@ function triStateEvaluate(value, truthy, falsy, undef) {
 define([
     'react',
     'jquery',
-    'reactBootstrap'
-], function (React, jQuery, ReactBootstrap) {
+    'reactBootstrap',
+    'config'
+], function (React, jQuery, ReactBootstrap, Config) {
     /**
      * A React component representing a message. Intended for use inside of a
      * MessageList.
@@ -66,7 +67,9 @@ define([
             return (
                 <tr className='message' onClick={this.props.onClick}>
                     <td>{state.html}</td>
-                    <td className='target-cell'>{state.target.format('MM-DD-YYYY HH:mm')}</td>
+                    <td className='target-cell'>
+                        {state.target.format(Config.dateTimeDisplayFormat)}
+                    </td>
                     <td className='sent-cell'>
                         <OverlayTrigger placement='right'
                             overlay={<Tooltip>{sentText}</Tooltip>}>

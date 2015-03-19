@@ -4,9 +4,10 @@ define([
     'react',
     'jquery',
     'reactBootstrap',
+    'config',
     'dashboard/messages/messageModalContent',
     'dashboard/messages/message'
-], function (React, jQuery, ReactBootstrap, MessageModalContent, Message) {
+], function (React, jQuery, ReactBootstrap, Config, MessageModalContent, Message) {
 
     var ModalTrigger = ReactBootstrap.ModalTrigger;
     var Button = ReactBootstrap.Button;
@@ -32,7 +33,7 @@ define([
                     id: this.props.message.id,
                     html: this.props.message.html,
                     recurring: this.props.message.recurring,
-                    target: this.props.message.target.format('MM-DD-YYYY HH:mm')
+                    target: this.props.message.target.format(Config.dateTimeFormat)
                 }
             }).done(function () {
                 if (this.props.messageDelegate) {

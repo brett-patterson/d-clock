@@ -4,8 +4,9 @@ define([
     'react',
     'jquery',
     'reactBootstrap',
+    'config',
     'dashboard/messages/messageModalContent'
-], function (React, jQuery, ReactBootstrap, MessageModalContent) {
+], function (React, jQuery, ReactBootstrap, Config, MessageModalContent) {
 
     var ModalTrigger = ReactBootstrap.ModalTrigger;
     var Button = ReactBootstrap.Button;
@@ -23,7 +24,7 @@ define([
             jQuery.post('/api/add-message/', {
                 message: {
                     html: html,
-                    target: target.format('MM-DD-YYYY HH:mm'),
+                    target: target.format(Config.dateTimeFormat),
                     recurring: 1
                 }
             }).done(function () {

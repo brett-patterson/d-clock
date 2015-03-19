@@ -5,10 +5,11 @@ define([
     'jquery',
     'reactBootstrap',
     'moment',
+    'config',
     'dashboard/dashboardSection',
     'dashboard/messages/editMessageModal',
     'dashboard/messages/newMessageModal'
-], function (React, jQuery, ReactBootstrap, Moment, DashboardSection,
+], function (React, jQuery, ReactBootstrap, Moment, Config, DashboardSection,
              EditMessageModal, NewMessageModal) {
     /**
      * A React component representing a list of messages.
@@ -39,7 +40,7 @@ define([
         fetchMessages: function () {
             jQuery.post('/api/messages/').done(function (result) {
                 var messages = result.map(function (message) {
-                    message.target = Moment(message.target, 'MM-DD-YYYY HH:mm');
+                    message.target = Moment(message.target, Config.dateTimeFormat);
                     return message;
                 });
                 this.setState(React.addons.update(this.state, {
