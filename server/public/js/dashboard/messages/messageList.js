@@ -32,12 +32,14 @@ define([
             this.updateMessages();
         },
 
-        updateMessages: function () {
-            this.fetchQueue();
-            this.fetchMessages();
+        updateMessages: function (callback) {
+            if (callback === undefined) {
+                callback = function () {};
+            }
+            this.fetchQueue(this.fetchMessages(callback));
         },
 
-        fetchMessages: function () {
+        fetchMessages: function (callback) {
             jQuery.post('/api/messages/').done(function (result) {
                 var messages = result.map(function (message) {
                     message.target = Moment(message.target, Config.dateTimeFormat);
@@ -46,11 +48,11 @@ define([
                 this.setState(React.addons.update(this.state, {
                     messages: { $set: messages },
                     error: { $merge: { messages: false } }
-                }));
+                }), callback);
             }.bind(this)).fail(function () {
                 this.setState(React.addons.update(this.state, {
                     error: { $merge: { messages: true } }
-                }));
+                }), callback);
             }.bind(this));
         },
 
@@ -59,11 +61,11 @@ define([
                 this.setState(React.addons.update(this.state, {
                     queue: { $set: result },
                     error: { $merge: { queue: false } }
-                }));
+                }), callback);
             }.bind(this)).fail(function () {
                 this.setState(React.addons.update(this.state, {
                     error: { $merge: { queue: true } }
-                }));
+                }), callback);
             }.bind(this));
         },
 

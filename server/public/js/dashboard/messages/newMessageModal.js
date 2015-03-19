@@ -18,6 +18,9 @@ define([
         displayName: 'NewMessageModalContent',
 
         onSend: function (event) {
+            jQuery(this.refs.sendButton.getDOMNode())
+                .html('<i class="fa fa-spinner fa-pulse"></i>');
+
             var target = this.refs.messageModal.getDateTime();
             var html = this.refs.messageModal.getHtml();
 
@@ -29,13 +32,14 @@ define([
                 }
             }).done(function () {
                 if (this.props.messageDelegate) {
-                    this.props.messageDelegate.updateMessages();
+                    this.props.messageDelegate.updateMessages(function () {
+                        this.props.onRequestHide(event);
+                    }.bind(this));
                 }
             }.bind(this)).fail(function () {
                 // TODO: Handle message creation fail
+                this.props.onRequestHide(event);
             });
-
-            this.props.onRequestHide(event);
         },
 
         render: function () {
@@ -43,7 +47,8 @@ define([
                 React.createElement(MessageModalContent, React.__spread({ref: "messageModal", title: "New Message", 
                     backdrop: "static"},  this.props), 
                     React.createElement(Button, {onClick: this.props.onRequestHide}, "Close"), 
-                    React.createElement(Button, {bsStyle: "primary", onClick: this.onSend}, "Send")
+                    React.createElement(Button, {bsStyle: "primary", ref: "sendButton", 
+                            onClick: this.onSend}, "Send")
                 )
             );
         }

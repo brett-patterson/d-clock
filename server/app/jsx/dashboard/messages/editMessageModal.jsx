@@ -22,6 +22,9 @@ define([
             var target = this.refs.messageModal.getDateTime();
             var html = this.refs.messageModal.getHtml();
 
+            jQuery(this.refs.saveButton.getDOMNode())
+                .html('<i class="fa fa-spinner fa-pulse"></i>');
+
             jQuery.post('/api/update-message/', {
                 message: {
                     id: this.props.message.id,
@@ -31,16 +34,20 @@ define([
                 }
             }).done(function () {
                 if (this.props.messageDelegate) {
-                    this.props.messageDelegate.updateMessages();
+                    this.props.messageDelegate.updateMessages(function () {
+                        this.props.onRequestHide(event);
+                    }.bind(this));
                 }
             }.bind(this)).fail(function () {
                 // TODO: Handle message update fail
+                this.props.onRequestHide(event);
             });
-
-            this.props.onRequestHide(event);
         },
 
         onDelete: function (event) {
+            jQuery(this.refs.deleteButton.getDOMNode())
+                .html('<i class="fa fa-spinner fa-pulse"></i>');
+
             jQuery.post('/api/remove-message/', {
                 message: {
                     id: this.props.message.id,
@@ -50,13 +57,14 @@ define([
                 }
             }).done(function () {
                 if (this.props.messageDelegate) {
-                    this.props.messageDelegate.updateMessages();
+                    this.props.messageDelegate.updateMessages(function () {
+                        this.props.onRequestHide(event);
+                    }.bind(this));
                 }
             }.bind(this)).fail(function () {
                 // TODO: Handle message deletion fail
+                this.props.onRequestHide(event);
             });
-
-            this.props.onRequestHide(event);
         },
 
         render: function () {
@@ -65,10 +73,13 @@ define([
                     html={this.props.message.html}
                     target={this.props.message.target}
                     {...this.props}>
-                    <Button bsStyle='danger' onClick={this.onDelete}
-                            className='pull-left'>Delete</Button>
+                    <Button bsStyle='danger' ref='deleteButton'
+                            onClick={this.onDelete} className='pull-left'>
+                            Delete
+                    </Button>
                     <Button onClick={this.props.onRequestHide}>Close</Button>
-                    <Button bsStyle='primary' onClick={this.onSave}>Save</Button>
+                    <Button bsStyle='primary' ref='saveButton'
+                            onClick={this.onSave}>Save</Button>
                 </MessageModalContent>
             );
         }
