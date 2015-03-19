@@ -5,9 +5,11 @@ define([
     'jquery',
     'reactBootstrap',
     'config',
+    'loadingMixin',
     'dashboard/messages/messageModalContent',
     'dashboard/messages/message'
-], function (React, jQuery, ReactBootstrap, Config, MessageModalContent, Message) {
+], function (React, jQuery, ReactBootstrap, Config, LoadingMixin,
+             MessageModalContent, Message) {
 
     var ModalTrigger = ReactBootstrap.ModalTrigger;
     var Button = ReactBootstrap.Button;
@@ -18,12 +20,15 @@ define([
     var EditMessageModalContent = React.createClass({
         displayName: 'EditMessageModalContent',
 
+        mixins: [LoadingMixin],
+
         onSave: function (event) {
             var target = this.refs.messageModal.getDateTime();
             var html = this.refs.messageModal.getHtml();
 
-            jQuery(this.refs.saveButton.getDOMNode())
-                .html('<i class="fa fa-spinner fa-pulse"></i>');
+            this.setState(React.addons.update(this.state, {
+                loading: { $merge: { save: true } }
+            }));
 
             jQuery.post('/api/update-message/', {
                 message: {
@@ -45,8 +50,9 @@ define([
         },
 
         onDelete: function (event) {
-            jQuery(this.refs.deleteButton.getDOMNode())
-                .html('<i class="fa fa-spinner fa-pulse"></i>');
+            this.setState(React.addons.update(this.state, {
+                loading: { $merge: { delete: true } }
+            }));
 
             jQuery.post('/api/remove-message/', {
                 message: {
@@ -73,13 +79,14 @@ define([
                     html={this.props.message.html}
                     target={this.props.message.target}
                     {...this.props}>
-                    <Button bsStyle='danger' ref='deleteButton'
-                            onClick={this.onDelete} className='pull-left'>
-                            Delete
+                    <Button bsStyle='danger' onClick={this.onDelete}
+                        className='pull-left'>
+                            {this.getSpinner('delete', 'Delete')}
                     </Button>
                     <Button onClick={this.props.onRequestHide}>Close</Button>
-                    <Button bsStyle='primary' ref='saveButton'
-                            onClick={this.onSave}>Save</Button>
+                    <Button bsStyle='primary' onClick={this.onSave}>
+                        {this.getSpinner('save', 'Save')}
+                    </Button>
                 </MessageModalContent>
             );
         }

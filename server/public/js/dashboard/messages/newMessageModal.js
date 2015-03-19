@@ -5,8 +5,10 @@ define([
     'jquery',
     'reactBootstrap',
     'config',
+    'loadingMixin',
     'dashboard/messages/messageModalContent'
-], function (React, jQuery, ReactBootstrap, Config, MessageModalContent) {
+], function (React, jQuery, ReactBootstrap, Config, LoadingMixin,
+             MessageModalContent) {
 
     var ModalTrigger = ReactBootstrap.ModalTrigger;
     var Button = ReactBootstrap.Button;
@@ -17,9 +19,12 @@ define([
     var NewMessageModalContent = React.createClass({
         displayName: 'NewMessageModalContent',
 
+        mixins: [LoadingMixin],
+
         onSend: function (event) {
-            jQuery(this.refs.sendButton.getDOMNode())
-                .html('<i class="fa fa-spinner fa-pulse"></i>');
+            this.setState(React.addons.update(this.state, {
+                loading: { $merge: { send: true } }
+            }));
 
             var target = this.refs.messageModal.getDateTime();
             var html = this.refs.messageModal.getHtml();
@@ -47,8 +52,9 @@ define([
                 React.createElement(MessageModalContent, React.__spread({ref: "messageModal", title: "New Message", 
                     backdrop: "static"},  this.props), 
                     React.createElement(Button, {onClick: this.props.onRequestHide}, "Close"), 
-                    React.createElement(Button, {bsStyle: "primary", ref: "sendButton", 
-                            onClick: this.onSend}, "Send")
+                    React.createElement(Button, {bsStyle: "primary", onClick: this.onSend}, 
+                        this.getSpinner('send', 'Send')
+                    )
                 )
             );
         }
