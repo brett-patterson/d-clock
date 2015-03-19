@@ -79,7 +79,7 @@ define([
                 }
 
                 return <EditMessageModal key={message.id} message={message}
-                                         sent={sent} />;
+                                         sent={sent} messageDelegate={this} />;
             }, this);
 
             var errorNodes = [];

@@ -19,13 +19,30 @@ define([
 
         onSave: function (event) {
             var target = this.refs.messageModal.getDateTime();
-            var content = this.refs.messageModal.getHtml();
+            var html = this.refs.messageModal.getHtml();
+
+            // TODO: Implement saving of edited messages
 
             this.props.onRequestHide(event);
         },
 
         onDelete: function (event) {
-            // TODO: Implement deletion of messages
+            jQuery.post('/api/remove-message', {
+                message: {
+                    id: this.props.message.id,
+                    html: this.props.message.html,
+                    recurring: this.props.message.recurring,
+                    target: this.props.message.target.format('MM-DD-YYYY HH:mm')
+                }
+            }).done(function () {
+                if (this.props.messageDelegate) {
+                    this.props.messageDelegate.fetchMessages();
+                }
+            }.bind(this)).fail(function () {
+                // TODO: Handle message deletion fail
+            });
+
+            this.props.onRequestHide(event);
         },
 
         render: function () {

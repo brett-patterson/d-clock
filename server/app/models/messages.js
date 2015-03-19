@@ -4,7 +4,8 @@ var Q = require('q'),
     uuid = require('node-uuid'),
     users = require('./users'),
     config = require('../config'),
-    db = require('orchestrate')(config.db.key);
+    db = require('orchestrate')(config.db.key),
+    util = require('../util');
 
 /**
  * Get all messages for a user.
@@ -107,9 +108,53 @@ var dequeue = function (email) {
     return deferred.promise;
 };
 
+/**
+ * Remove a user's message from the messages list and from the queue.
+ * @param {string} email - The user's email address
+ * @param {object} message - The message to remove
+ */
+var remove = function (email, message) {
+    var deferred = Q.defer();
+
+    all(email).then(function (messages) {
+        var mIndex = util.indexOf(messages, message.id, function (m) {
+            return m.id;
+        });
+
+        if (mIndex > -1) {
+            messages.splice(mIndex, 1);
+            var patch = db.newPatchBuilder('messages', email)
+                            .replace('messages', messages);
+
+            queue(email).then(function (messageQueue) {
+                var qIndex = util.indexOf(messageQueue, message.id, function (m) {
+                    return m.id;
+                });
+                if (qIndex > -1) {
+                    messageQueue.splice(qIndex, 1);
+                    patch.replace('queue', messageQueue);
+                }
+            }).fin(function () {
+                patch.apply().then(function () {
+                    deferred.resolve(true);
+                }).fail(function (error) {
+                    deferred.reject(new Error(error.body));
+                });
+            });
+        } else {
+            deferred.reject('Message not found');
+        }
+    }).fail(function (error) {
+        deferred.reject(new Error(error.body));
+    });
+
+    return deferred.promise;
+}
+
 module.exports = {
     all: all,
     add: add,
     queue: queue,
-    dequeue: dequeue
+    dequeue: dequeue,
+    remove: remove
 };
