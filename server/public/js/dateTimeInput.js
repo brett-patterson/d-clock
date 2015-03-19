@@ -3,10 +3,8 @@
 define([
     'react',
     'jquery',
-    'reactBootstrap',
     'dateTimePicker'
-], function (React, jQuery, ReactBootstrap) {
-    var Input = ReactBootstrap.Input;
+], function (React, jQuery) {
 
     /**
      * A React component representing a date/time input.
