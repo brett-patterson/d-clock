@@ -10,7 +10,8 @@ $dashboard-modal-title-text: #fff;
 $dashboard-modal-title-background: $color-primary;
 
 $dashboard-message-padding: 5px;
-$dashboard-message-size: 200px;
+$dashboard-message-size: 215px;
+$dashboard-message-spacing: 20px;
 
 @mixin fa-icon-before {
   font-family: FontAwesome;
@@ -68,6 +69,7 @@ $dashboard-message-size: 200px;
     border: 2px solid $dashboard-message-hover-normal;
     display: inline-block;
     height: $dashboard-message-size;
+    margin: $dashboard-message-spacing;
     padding: $dashboard-message-padding;
     width: $dashboard-message-size;
 

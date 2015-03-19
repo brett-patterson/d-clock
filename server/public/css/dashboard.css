@@ -81,9 +81,10 @@
 .message-list .message {
   border: 2px solid #bababa;
   display: inline-block;
-  height: 200px;
+  height: 215px;
+  margin: 20px;
   padding: 5px;
-  width: 200px; }
+  width: 215px; }
   .message-list .message .message-html {
     height: 70%;
     text-align: center;

@@ -56,7 +56,15 @@ define([
             this.setState(newState);
         },
 
+        componentDidMount: function () {
+            this.updateHtml();
+        },
+
         componentDidUpdate: function (prevProps, prevState) {
+            this.updateHtml();
+        },
+
+        updateHtml: function () {
             jQuery(this.refs.messageHtml.getDOMNode()).html(this.state.html);
         },
 
