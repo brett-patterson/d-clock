@@ -1,6 +1,8 @@
 'use strict';
 
-define(['react', 'jquery', 'reactBootstrap', 'messageModalContent', 'message'],
+define(['react', 'jquery', 'reactBootstrap',
+        'dashboard/messages/messageModalContent',
+        'dashboard/messages/message'],
     function (React, jQuery, ReactBootstrap, MessageModalContent, Message) {
 
     var ModalTrigger = ReactBootstrap.ModalTrigger;
@@ -25,15 +27,15 @@ define(['react', 'jquery', 'reactBootstrap', 'messageModalContent', 'message'],
 
         render: function () {
             return (
-                React.createElement(MessageModalContent, React.__spread({ref: "messageModal", title: "Edit Message", 
-                    html: this.props.message.html, 
-                    target: this.props.message.target}, 
-                    this.props), 
-                    React.createElement(Button, {bsStyle: "danger", onClick: this.onDelete, 
-                            className: "pull-left"}, "Delete"), 
-                    React.createElement(Button, {onClick: this.props.onRequestHide}, "Close"), 
-                    React.createElement(Button, {bsStyle: "primary", onClick: this.onSave}, "Save")
-                )
+                <MessageModalContent ref='messageModal' title='Edit Message'
+                    html={this.props.message.html}
+                    target={this.props.message.target}
+                    {...this.props}>
+                    <Button bsStyle='danger' onClick={this.onDelete}
+                            className='pull-left'>Delete</Button>
+                    <Button onClick={this.props.onRequestHide}>Close</Button>
+                    <Button bsStyle='primary' onClick={this.onSave}>Save</Button>
+                </MessageModalContent>
             );
         }
     });
@@ -52,13 +54,13 @@ define(['react', 'jquery', 'reactBootstrap', 'messageModalContent', 'message'],
         },
 
         render: function () {
-            var content = React.createElement(EditMessageModalContent, {message: this.props.message, 
-                            messageDelegate: this.props.messageDelegate});
+            var content = <EditMessageModalContent message={this.props.message}
+                            messageDelegate={this.props.messageDelegate} />;
 
             return (
-                React.createElement(ModalTrigger, {modal: content}, 
-                    React.createElement(Message, {data: this.props.message, sent: this.props.sent})
-                )
+                <ModalTrigger modal={content}>
+                    <Message data={this.props.message} sent={this.props.sent} />
+                </ModalTrigger>
             );
         }
     });

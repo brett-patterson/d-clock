@@ -1,6 +1,7 @@
 'use strict';
 
-define(['react', 'jquery', 'reactBootstrap', 'messageModalContent'],
+define(['react', 'jquery', 'reactBootstrap',
+        'dashboard/messages/messageModalContent'],
     function (React, jQuery, ReactBootstrap, MessageModalContent) {
 
     var ModalTrigger = ReactBootstrap.ModalTrigger;
@@ -35,11 +36,11 @@ define(['react', 'jquery', 'reactBootstrap', 'messageModalContent'],
 
         render: function () {
             return (
-                React.createElement(MessageModalContent, React.__spread({ref: "messageModal", title: "New Message"}, 
-                    this.props), 
-                    React.createElement(Button, {onClick: this.props.onRequestHide}, "Close"), 
-                    React.createElement(Button, {bsStyle: "primary", onClick: this.onSend}, "Send")
-                )
+                <MessageModalContent ref='messageModal' title='New Message'
+                    {...this.props}>
+                    <Button onClick={this.props.onRequestHide}>Close</Button>
+                    <Button bsStyle='primary' onClick={this.onSend}>Send</Button>
+                </MessageModalContent>
             );
         }
     });
@@ -52,13 +53,13 @@ define(['react', 'jquery', 'reactBootstrap', 'messageModalContent'],
         displayName: 'NewMessageModal',
 
         render: function () {
-            var content = React.createElement(NewMessageModalContent, {
-                            messageDelegate: this.props.messageDelegate});
+            var content = <NewMessageModalContent
+                            messageDelegate={this.props.messageDelegate} />;
 
             return (
-                React.createElement(ModalTrigger, {modal: content}, 
-                    React.createElement(Button, {className: "fa fa-2x fa-pencil-square-o new-message-btn pull-right"})
-                )
+                <ModalTrigger modal={content}>
+                    <Button className='fa fa-2x fa-pencil-square-o new-message-btn pull-right' />
+                </ModalTrigger>
             );
         }
     });

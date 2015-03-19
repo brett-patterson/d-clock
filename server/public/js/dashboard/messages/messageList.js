@@ -1,9 +1,11 @@
 'use strict';
 
-define(['react', 'jquery', 'reactBootstrap', 'moment', 'dashboardSection',
-        'editMessageModal', 'newMessageModal'],
-        function (React, jQuery, ReactBootstrap, Moment, DashboardSection,
-                  EditMessageModal, NewMessageModal) {
+define(['react', 'jquery', 'reactBootstrap', 'moment',
+        'dashboard/dashboardSection',
+        'dashboard/messages/editMessageModal',
+        'dashboard/messages/newMessageModal'
+], function (React, jQuery, ReactBootstrap, Moment, DashboardSection,
+             EditMessageModal, NewMessageModal) {
     /**
      * A React component representing a list of messages.
      */
