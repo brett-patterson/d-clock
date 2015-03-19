@@ -22,13 +22,26 @@ define([
             var target = this.refs.messageModal.getDateTime();
             var html = this.refs.messageModal.getHtml();
 
-            // TODO: Implement saving of edited messages
+            jQuery.post('/api/update-message/', {
+                message: {
+                    id: this.props.message.id,
+                    html: html,
+                    recurring: this.props.message.recurring,
+                    target: target.format(Config.dateTimeFormat)
+                }
+            }).done(function () {
+                if (this.props.messageDelegate) {
+                    this.props.messageDelegate.updateMessages();
+                }
+            }.bind(this)).fail(function () {
+                // TODO: Handle message update fail
+            });
 
             this.props.onRequestHide(event);
         },
 
         onDelete: function (event) {
-            jQuery.post('/api/remove-message', {
+            jQuery.post('/api/remove-message/', {
                 message: {
                     id: this.props.message.id,
                     html: this.props.message.html,

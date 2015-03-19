@@ -77,6 +77,19 @@ var api = function (app) {
         });
     });
 
+    app.post('/api/update-message/', middleware.requireApiUser, function (req, res) {
+        var message = req.body.message;
+        if (typeof req.body.message === 'string') {
+            message = JSON.parse(message);
+        }
+
+        messages.update(req.user.email, message).then(function () {
+            apiResponse(true, res);
+        }).fail(function (error) {
+            apiResponse(false, res, { error: error });
+        });
+    });
+
     app.post('/api/remove-message/', middleware.requireApiUser, function (req, res) {
         var message = req.body.message;
         if (typeof req.body.message === 'string') {

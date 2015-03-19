@@ -109,6 +109,44 @@ var dequeue = function (email) {
 };
 
 /**
+ * Update a message for a user.
+ * @param {string} email - The user's email address
+ * @param {object} message - A message object
+ */
+var update = function (email, message) {
+    var deferred = Q.defer();
+
+    all(email).then(function (messages) {
+        var mIndex = util.indexOf(messages, message.id, function (m) {
+                return m.id;
+            });
+        if (mIndex > -1) {
+            var patch = db.newPatchBuilder('messages', email)
+                            .replace('messages.' + mIndex, message);
+
+            queue(email).then(function (messageQueue) {
+                var qIndex = util.indexOf(messageQueue, message.id, function (m) {
+                    return m.id;
+                });
+                if (qIndex > -1) {
+                    patch.replace('queue.' + qIndex, message);
+                }
+            }).fin(function () {
+                patch.apply().then(function () {
+                    deferred.resolve(true);
+                }).fail(function (error) {
+                    deferred.reject(new Error(error.body));
+                });
+            });
+        } else {
+            deferred.reject('Message not found');
+        }
+    });
+
+    return deferred.promise;
+};
+
+/**
  * Remove a user's message from the messages list and from the queue.
  * @param {string} email - The user's email address
  * @param {object} message - The message to remove
@@ -156,5 +194,6 @@ module.exports = {
     add: add,
     queue: queue,
     dequeue: dequeue,
+    update: update,
     remove: remove
 };
