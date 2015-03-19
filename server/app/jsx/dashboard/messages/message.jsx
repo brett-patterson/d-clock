@@ -50,10 +50,14 @@ define([
             return state;
         },
 
-        componentWillReceiveProps: function(nextProps) {
+        componentWillReceiveProps: function (nextProps) {
             var newState = {};
             jQuery.extend(newState, nextProps.data, { sent: nextProps.sent });
             this.setState(newState);
+        },
+
+        componentDidUpdate: function (prevProps, prevState) {
+            jQuery(this.refs.messageHtml.getDOMNode()).html(this.state.html);
         },
 
         render: function () {
@@ -65,18 +69,18 @@ define([
             var sentText = triStateEvaluate(this.state.sent,
                                             'Sent', 'Pending', 'Unknown');
             return (
-                <tr className='message' onClick={this.props.onClick}>
-                    <td>{state.html}</td>
-                    <td className='target-cell'>
-                        {state.target.format(Config.dateTimeDisplayFormat)}
-                    </td>
-                    <td className='sent-cell'>
+                <div className='message' onClick={this.props.onClick}>
+                    <div className='message-sent'>
                         <OverlayTrigger placement='right'
                             overlay={<Tooltip>{sentText}</Tooltip>}>
                             {sentIcon}
                         </OverlayTrigger>
-                    </td>
-                </tr>
+                    </div>
+                    <div className='message-html' ref='messageHtml'></div>
+                    <div className='message-target'>
+                        {state.target.format(Config.dateTimeDisplayFormat)}
+                    </div>
+                </div>
             );
         }
     });

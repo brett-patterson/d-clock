@@ -1,14 +1,16 @@
 @import 'base';
 @import 'colors';
 
-$dashboard-section-border: #bababa;
 $dashboard-section-error: #e70000;
 $dashboard-message-sent: #00a900;
 $dashboard-message-pending: #efdb00;
-$dashboard-message-hover-normal: #fff;
+$dashboard-message-hover-normal: #bababa;
 $dashboard-message-hover-selected: $color-primary;
 $dashboard-modal-title-text: #fff;
 $dashboard-modal-title-background: $color-primary;
+
+$dashboard-message-padding: 5px;
+$dashboard-message-size: 200px;
 
 @mixin fa-icon-before {
   font-family: FontAwesome;
@@ -21,69 +23,73 @@ $dashboard-modal-title-background: $color-primary;
 }
 
 .dashboard-section {
+  margin-bottom: 20px;
+}
 
-  .dashboard-section-title-wrapper {
-    position: relative;
+.dashboard-section-title-wrapper {
+  position: relative;
 
-    .dashboard-section-title {
-      border-bottom: 1px solid $color-primary;
-      font-variant: small-caps;
-      margin-bottom: 0;
-      padding-bottom: 10px;
-    }
+  .dashboard-section-title {
+    border-bottom: 1px solid $color-primary;
+    font-variant: small-caps;
+    margin-bottom: 0;
+    padding-bottom: 10px;
 
-    .dashboard-section-title:hover {
-      cursor: pointer;
-    }
-
-    .dashboard-section-title.section-open:before {
+    &.section-open:before {
       @include fa-icon-before;
       content: '\f0d7';
       left: -20px;
     }
 
-    .dashboard-section-title.section-closed:before {
+    &.section-closed:before {
       @include fa-icon-before;
       content: '\f0da';
       left: -15px;
     }
   }
 
-  .dashboard-section-errors {
-    color: $dashboard-section-error;
+  .dashboard-section-title:hover {
+    cursor: pointer;
   }
+}
 
-  .dashboard-section-content {
-    border-left: 1px dotted $dashboard-section-border;
-    border-right: 1px dotted $dashboard-section-border;
-    margin: 0 auto;
-    padding: 10px;
-    width: 95%;
-  }
+.dashboard-section-errors {
+  color: $dashboard-section-error;
+}
 
+.dashboard-section-content {
+  margin: 0 auto;
+  padding: 10px;
+  width: 95%;
 }
 
 .message-list {
-  margin-bottom: 0;
-  table-layout: fixed;
-  width: 100%;
-
-  .sent-cell {
-    text-align: center;
-    width: 10%;
-  }
-
-  .target-cell {
-    text-align: center;
-    width: 20%;
-  }
-
   .message {
-    border-left: 2px solid $dashboard-message-hover-normal;
+    border: 2px solid $dashboard-message-hover-normal;
+    display: inline-block;
+    height: $dashboard-message-size;
+    padding: $dashboard-message-padding;
+    width: $dashboard-message-size;
+
+    .message-html {
+      height: 70%;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    .message-sent {
+      height: 10%;
+      text-align: right;
+    }
+
+    .message-target {
+      height: 20%;
+      text-align: center;
+    }
   }
 
   .message:hover {
-    border-left-color: $dashboard-message-hover-selected;
+    border-color: $dashboard-message-hover-selected;
     cursor: pointer;
   }
 }
@@ -109,19 +115,18 @@ $dashboard-modal-title-background: $color-primary;
 }
 
 .new-message-btn {
-  border: none;
+  border: 0;
   color: $color-primary;
 
   &:hover,
   &:focus,
   &:active {
-    border: none;
+    border: 0;
     color: $color-primary-dark;
   }
 }
 
 .dashboard-modal {
-
   .modal-header {
     @include primary;
   }

@@ -106,18 +106,9 @@ define([
 
                     <NewMessageModal messageDelegate={this} />
 
-                    <ReactBootstrap.Table className='table message-list'>
-                        <thead>
-                            <tr>
-                                <th>Content</th>
-                                <th className='target-cell'>Target Date</th>
-                                <th className='sent-cell'>Sent?</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {messageNodes}
-                        </tbody>
-                    </ReactBootstrap.Table>
+                    <div className='message-list'>
+                        {messageNodes}
+                    </div>
                 </div>
             );
 

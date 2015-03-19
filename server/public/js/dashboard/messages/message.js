@@ -50,10 +50,14 @@ define([
             return state;
         },
 
-        componentWillReceiveProps: function(nextProps) {
+        componentWillReceiveProps: function (nextProps) {
             var newState = {};
             jQuery.extend(newState, nextProps.data, { sent: nextProps.sent });
             this.setState(newState);
+        },
+
+        componentDidUpdate: function (prevProps, prevState) {
+            jQuery(this.refs.messageHtml.getDOMNode()).html(this.state.html);
         },
 
         render: function () {
@@ -65,16 +69,16 @@ define([
             var sentText = triStateEvaluate(this.state.sent,
                                             'Sent', 'Pending', 'Unknown');
             return (
-                React.createElement("tr", {className: "message", onClick: this.props.onClick}, 
-                    React.createElement("td", null, state.html), 
-                    React.createElement("td", {className: "target-cell"}, 
-                        state.target.format(Config.dateTimeDisplayFormat)
-                    ), 
-                    React.createElement("td", {className: "sent-cell"}, 
+                React.createElement("div", {className: "message", onClick: this.props.onClick}, 
+                    React.createElement("div", {className: "message-sent"}, 
                         React.createElement(OverlayTrigger, {placement: "right", 
                             overlay: React.createElement(Tooltip, null, sentText)}, 
                             sentIcon
                         )
+                    ), 
+                    React.createElement("div", {className: "message-html", ref: "messageHtml"}), 
+                    React.createElement("div", {className: "message-target"}, 
+                        state.target.format(Config.dateTimeDisplayFormat)
                     )
                 )
             );

@@ -106,17 +106,8 @@ define([
 
                     React.createElement(NewMessageModal, {messageDelegate: this}), 
 
-                    React.createElement(ReactBootstrap.Table, {className: "table message-list"}, 
-                        React.createElement("thead", null, 
-                            React.createElement("tr", null, 
-                                React.createElement("th", null, "Content"), 
-                                React.createElement("th", {className: "target-cell"}, "Target Date"), 
-                                React.createElement("th", {className: "sent-cell"}, "Sent?")
-                            )
-                        ), 
-                        React.createElement("tbody", null, 
-                            messageNodes
-                        )
+                    React.createElement("div", {className: "message-list"}, 
+                        messageNodes
                     )
                 )
             );
