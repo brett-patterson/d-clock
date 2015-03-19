@@ -55,7 +55,7 @@ define([
 
         render: function () {
             return (
-                React.createElement(Modal, React.__spread({},  this.props, {closeButton: false, backdrop: "static", 
+                React.createElement(Modal, React.__spread({},  this.props, {closeButton: false, 
                        className: "dashboard-modal"}), 
 
                     React.createElement("div", {className: "modal-body"}, 

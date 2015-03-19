@@ -39,8 +39,8 @@ define([
 
         render: function () {
             return (
-                React.createElement(MessageModalContent, React.__spread({ref: "messageModal", title: "New Message"}, 
-                    this.props), 
+                React.createElement(MessageModalContent, React.__spread({ref: "messageModal", title: "New Message", 
+                    backdrop: "static"},  this.props), 
                     React.createElement(Button, {onClick: this.props.onRequestHide}, "Close"), 
                     React.createElement(Button, {bsStyle: "primary", onClick: this.onSend}, "Send")
                 )

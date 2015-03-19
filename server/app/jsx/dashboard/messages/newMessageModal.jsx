@@ -40,7 +40,7 @@ define([
         render: function () {
             return (
                 <MessageModalContent ref='messageModal' title='New Message'
-                    {...this.props}>
+                    backdrop='static' {...this.props}>
                     <Button onClick={this.props.onRequestHide}>Close</Button>
                     <Button bsStyle='primary' onClick={this.onSend}>Send</Button>
                 </MessageModalContent>

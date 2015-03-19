@@ -55,7 +55,7 @@ define([
 
         render: function () {
             return (
-                <Modal {...this.props} closeButton={false} backdrop='static'
+                <Modal {...this.props} closeButton={false}
                        className='dashboard-modal'>
 
                     <div className='modal-body'>
