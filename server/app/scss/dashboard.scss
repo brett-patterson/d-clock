@@ -3,7 +3,7 @@
 
 $dashboard-section-border: #bababa;
 $dashboard-section-error: #e70000;
-$dashboard-message-complete: #00a900;
+$dashboard-message-sent: #00a900;
 $dashboard-message-pending: #efdb00;
 $dashboard-message-hover-normal: #fff;
 $dashboard-message-hover-selected: $color-primary;
@@ -88,15 +88,23 @@ $dashboard-modal-title-background: $color-primary;
   }
 }
 
-.message-complete {
-  color: $dashboard-message-complete;
+@mixin message-status {
+  line-height: 1em;
+  vertical-align: middle;
+}
+
+.message-sent {
+  @include message-status;
+  color: $dashboard-message-sent;
 }
 
 .message-pending {
+  @include message-status;
   color: $dashboard-message-pending;
 }
 
 .message-unknown {
+  @include message-status;
   color: $dashboard-section-error;
 }
 

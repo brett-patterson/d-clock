@@ -20,11 +20,15 @@ function triStateEvaluate(value, truthy, falsy, undef) {
     return falsy;
 }
 
-define(['react', 'jquery'], function (React, jQuery) {
+define(['react', 'jquery', 'reactBootstrap'],
+        function (React, jQuery, ReactBootstrap) {
     /**
      * A React component representing a message. Intended for use inside of a
      * MessageList.
      */
+    var OverlayTrigger = ReactBootstrap.OverlayTrigger;
+    var Tooltip = ReactBootstrap.Tooltip;
+
     return React.createClass({
         displayName: 'Message',
 
@@ -50,15 +54,22 @@ define(['react', 'jquery'], function (React, jQuery) {
 
         render: function () {
             var state = this.state;
-            var displaySent = triStateEvaluate(this.state.sent,
-                <i className='fa fa-lg fa-check-circle message-complete'></i>,
+            var sentIcon = triStateEvaluate(this.state.sent,
+                <i className='fa fa-lg fa-check-circle message-sent'></i>,
                 <i className='fa fa-lg fa-dot-circle-o message-pending'></i>,
                 <i className='fa fa-lg fa-question-circle message-unknown'></i>);
+            var sentText = triStateEvaluate(this.state.sent,
+                                            'Sent', 'Pending', 'Unknown');
             return (
                 <tr className='message' onClick={this.props.onClick}>
                     <td>{state.html}</td>
                     <td className='target-cell'>{state.target}</td>
-                    <td className='sent-cell'>{displaySent}</td>
+                    <td className='sent-cell'>
+                        <OverlayTrigger placement='right'
+                            overlay={<Tooltip>{sentText}</Tooltip>}>
+                            {sentIcon}
+                        </OverlayTrigger>
+                    </td>
                 </tr>
             );
         }

@@ -91,13 +91,19 @@
     border-left-color: #ed6b7c;
     cursor: pointer; }
 
-.message-complete {
+.message-sent {
+  line-height: 1em;
+  vertical-align: middle;
   color: #00a900; }
 
 .message-pending {
+  line-height: 1em;
+  vertical-align: middle;
   color: #efdb00; }
 
 .message-unknown {
+  line-height: 1em;
+  vertical-align: middle;
   color: #e70000; }
 
 .new-message-btn {
