@@ -3,8 +3,9 @@
 define([
     'react',
     'reactBootstrap',
-    'dateTimeInput'
-], function (React, ReactBootstrap, DateTimeInput) {
+    'dateTimeInput',
+    'editor'
+], function (React, ReactBootstrap, DateTimeInput, Editor) {
 
     var Modal = ReactBootstrap.Modal;
     var Input = ReactBootstrap.Input;
@@ -27,7 +28,7 @@ define([
 
         setHtml: function (html) {
             if (this.refs.htmlInput) {
-                jQuery(this.refs.htmlInput.getDOMNode()).find('textarea').val(html);
+                this.refs.htmlInput.setValue(html);
             }
         },
 
@@ -61,8 +62,7 @@ define([
                     <div className='modal-body'>
                         <form className='form'>
                             <DateTimeInput ref='dateTimeInput' />
-                            <Input ref='htmlInput'
-                                   type='textarea' label='Content' />
+                            <Editor ref='htmlInput' />
                         </form>
                     </div>
 

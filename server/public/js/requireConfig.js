@@ -8,6 +8,12 @@ require.config({
         'bootstrap': '/lib/bootstrap/dist/js/bootstrap',
         'reactBootstrap': '/lib/react-bootstrap/react-bootstrap',
         'dateTimePicker': '/lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min',
-        'moment': '/lib/moment/moment'
+        'moment': '/lib/moment/moment',
+        'ckeditor': '/lib/ckeditor/adapters/jquery'
+    },
+    shim: {
+        ckeditor: {
+            deps: ['/lib/ckeditor/ckeditor.js']
+        }
     }
 });
