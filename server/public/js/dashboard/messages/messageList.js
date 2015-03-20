@@ -43,6 +43,7 @@ define([
             jQuery.post('/api/messages/').done(function (result) {
                 var messages = result.map(function (message) {
                     message.target = Moment(message.target, Config.dateTimeFormat);
+                    message.recurring = parseInt(message.recurring);
                     return message;
                 });
                 this.setState(React.addons.update(this.state, {

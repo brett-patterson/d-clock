@@ -130,4 +130,8 @@
 .modal-backdrop.in {
   height: 100%; }
 
+.recurring-container {
+  margin-bottom: 15px;
+  text-align: center; }
+
 /*# sourceMappingURL=dashboard.css.map */

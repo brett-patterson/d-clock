@@ -25,6 +25,7 @@ define([
         onSave: function (event) {
             var target = this.refs.messageModal.getDateTime();
             var html = this.refs.messageModal.getHtml();
+            var recurring = this.refs.messageModal.getRecurring();
 
             this.setState(React.addons.update(this.state, {
                 loading: { $merge: { save: true } }
@@ -34,7 +35,7 @@ define([
                 message: {
                     id: this.props.message.id,
                     html: html,
-                    recurring: this.props.message.recurring,
+                    recurring: recurring,
                     target: target.format(Config.dateTimeFormat)
                 }
             }).done(function () {
@@ -76,8 +77,7 @@ define([
         render: function () {
             return (
                 React.createElement(MessageModalContent, React.__spread({ref: "messageModal", title: "Edit Message", 
-                    html: this.props.message.html, 
-                    target: this.props.message.target}, 
+                    message: this.props.message}, 
                     this.props), 
                     React.createElement(Button, {bsStyle: "danger", onClick: this.onDelete, 
                         className: "pull-left"}, 

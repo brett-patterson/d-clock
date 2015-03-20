@@ -3,9 +3,12 @@
 define([
     'react',
     'reactBootstrap',
+    'config',
     'dateTimeInput',
-    'editor'
-], function (React, ReactBootstrap, DateTimeInput, Editor) {
+    'editor',
+    'dashboard/messages/recurringSelector'
+], function (React, ReactBootstrap, Config, DateTimeInput, Editor,
+             RecurringSelector) {
 
     var Modal = ReactBootstrap.Modal;
     var Input = ReactBootstrap.Input;
@@ -17,12 +20,22 @@ define([
         displayName: 'MessageModalContent',
 
         componentDidMount: function () {
-            if (this.props.html) {
-                this.setHtml(this.props.html);
+            if (!this.props.message) {
+                // Configure for a new message
+                this.setRecurring(Config.recurring.once);
+                return;
             }
 
-            if (this.props.target) {
-                this.setDateTime(this.props.target);
+            if (this.props.message.html) {
+                this.setHtml(this.props.message.html);
+            }
+
+            if (this.props.message.target) {
+                this.setDateTime(this.props.message.target);
+            }
+
+            if (this.props.message.recurring) {
+                this.setRecurring(this.props.message.recurring);
             }
         },
 
@@ -54,6 +67,20 @@ define([
             return undefined;
         },
 
+        setRecurring: function (recurring) {
+            if (this.refs.recurringInput) {
+                this.refs.recurringInput.setValue(recurring);
+            }
+        },
+
+        getRecurring: function () {
+            if (this.refs.recurringInput) {
+                return this.refs.recurringInput.getValue();
+            }
+
+            return undefined;
+        },
+
         render: function () {
             return (
                 <Modal {...this.props} closeButton={false}
@@ -62,6 +89,7 @@ define([
                     <div className='modal-body'>
                         <form className='form'>
                             <DateTimeInput ref='dateTimeInput' />
+                            <RecurringSelector ref='recurringInput' />
                             <Editor ref='htmlInput' />
                         </form>
                     </div>

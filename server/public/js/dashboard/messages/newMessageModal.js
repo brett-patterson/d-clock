@@ -28,12 +28,13 @@ define([
 
             var target = this.refs.messageModal.getDateTime();
             var html = this.refs.messageModal.getHtml();
+            var recurring = this.refs.messageModal.getRecurring();
 
             jQuery.post('/api/add-message/', {
                 message: {
                     html: html,
                     target: target.format(Config.dateTimeFormat),
-                    recurring: 1
+                    recurring: recurring
                 }
             }).done(function () {
                 if (this.props.messageDelegate) {
