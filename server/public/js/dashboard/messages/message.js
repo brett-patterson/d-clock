@@ -78,15 +78,17 @@ define([
                                             'Sent', 'Pending', 'Unknown');
             return (
                 React.createElement("div", {className: "message", onClick: this.props.onClick}, 
-                    React.createElement("div", {className: "message-sent"}, 
+                    React.createElement("div", {className: "message-section-sent"}, 
                         React.createElement(OverlayTrigger, {placement: "right", 
                             overlay: React.createElement(Tooltip, null, sentText)}, 
                             sentIcon
                         )
                     ), 
-                    React.createElement("div", {className: "message-html", ref: "messageHtml"}), 
-                    React.createElement("div", {className: "message-target"}, 
-                        state.target.format(Config.dateTimeDisplayFormat)
+                    React.createElement("div", {className: "message-section-html", ref: "messageHtml"}), 
+                    React.createElement("div", {className: "message-section-target"}, 
+                        React.createElement("h4", null, React.createElement("small", null, 
+                            state.target.format(Config.dateTimeDisplayFormat)
+                        ))
                     )
                 )
             );

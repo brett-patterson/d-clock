@@ -83,21 +83,22 @@
   display: inline-block;
   height: 215px;
   margin: 20px;
-  padding: 5px;
   width: 215px; }
-  .message-list .message .message-html {
-    height: 70%;
-    text-align: center;
-    vertical-align: middle; }
-  .message-list .message .message-sent {
+  .message-list .message .message-section-html {
+    height: 75%;
+    overflow: hidden;
+    padding: 5px; }
+  .message-list .message .message-section-sent {
     height: 10%;
+    padding-right: 5px;
+    padding-top: 5px;
     text-align: right; }
-  .message-list .message .message-target {
-    height: 20%;
+  .message-list .message .message-section-target {
+    height: 15%;
     text-align: center; }
-.message-list .message:hover {
-  border-color: #ed6b7c;
-  cursor: pointer; }
+  .message-list .message:hover {
+    border-color: #ed6b7c;
+    cursor: pointer; }
 
 .message-sent {
   line-height: 1em;

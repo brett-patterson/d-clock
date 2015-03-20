@@ -78,15 +78,17 @@ define([
                                             'Sent', 'Pending', 'Unknown');
             return (
                 <div className='message' onClick={this.props.onClick}>
-                    <div className='message-sent'>
+                    <div className='message-section-sent'>
                         <OverlayTrigger placement='right'
                             overlay={<Tooltip>{sentText}</Tooltip>}>
                             {sentIcon}
                         </OverlayTrigger>
                     </div>
-                    <div className='message-html' ref='messageHtml'></div>
-                    <div className='message-target'>
-                        {state.target.format(Config.dateTimeDisplayFormat)}
+                    <div className='message-section-html' ref='messageHtml'></div>
+                    <div className='message-section-target'>
+                        <h4><small>
+                            {state.target.format(Config.dateTimeDisplayFormat)}
+                        </small></h4>
                     </div>
                 </div>
             );
