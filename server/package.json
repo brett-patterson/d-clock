@@ -17,16 +17,14 @@
     "express": "^4.10.7",
     "express-flash": "0.0.2",
     "express-session": "^1.10.1",
-    "express-ws": "^0.2.5",
     "jade": "^1.9.0",
-    "moment": "^2.9.0",
     "node-uuid": "^1.4.3",
     "orchestrate": "^0.4.0",
     "passport": "^0.2.1",
     "passport-local": "^1.0.0",
     "q": "^1.1.2",
     "underscore": "^1.8.2",
-    "ws": "^0.7.1"
+    "websocket": "^1.0.18"
   },
   "scripts": {
     "start-dev": "sass --watch app/scss/:public/css/ & jsx --extension jsx --watch app/jsx/ public/js/ & nodemon index.js"

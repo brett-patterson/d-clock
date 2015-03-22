@@ -1,7 +1,9 @@
+import base64
 import json
 import os
 
 from ws4py.client.threadedclient import WebSocketClient
+from ws4py.exc import HandshakeError
 
 from message import Message
 
@@ -93,7 +95,12 @@ class MessageClient(WebSocketClient):
             The message sent from the server.
 
         """
-        self._source.add_messages(load_messages_from_json(unicode(msg)))
+        try:
+            message = Message.unpack(json.loads(unicode(msg)))
+            print 'Got message: ', message.html
+            self._source.add_message(message)
+        except ValueError:
+            print 'Error parsing message: %s' % msg
 
 
 class WebSocketSource(Source):
@@ -114,11 +121,27 @@ class WebSocketSource(Source):
 
         self._host = host
 
-        client = MessageClient(self, host)
-        client.connect()
+        # TODO: No hardcoded authentication
+        self.client = MessageClient(self, host, headers=[('Authorization',
+            'Basic %s' % base64.b64encode('brett.patterson@rice.edu:just67')),
+            ('Sec-WebSocket-Protocol', 'message')])
 
-    def add_messages(self, messages):
-        self._messages.extend(messages)
+        try:
+            self.client.connect()
+        except HandshakeError as e:
+            # TODO: Show/log authentication error
+            print e
+
+    def add_message(self, message):
+        """ Add a message to the source.
+
+        Parameters:
+        -----------
+        message : Message
+            The message to be added.
+
+        """
+        self._messages.append(message)
 
     def messages(self):
         """ Return a list of Message objects received from the server.
@@ -130,4 +153,4 @@ class WebSocketSource(Source):
         """ Close the websocket on object destruction.
 
         """
-        self._client_thread.quit()
+        self.client.close()

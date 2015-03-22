@@ -1,11 +1,12 @@
 'use strict';
 
-var moment = require('moment'),
+var basicAuth = require('basic-auth'),
     passport = require('passport'),
 
     middleware = require('./middleware'),
     messages = require('./models/messages'),
-    users = require('./models/users');
+    users = require('./models/users'),
+    util = require('./util');
 
 /**
  * Helper to respond to an API request.
@@ -108,29 +109,6 @@ var api = function (app) {
             apiResponse(true, res, result);
         }).fail(function (error) {
             apiResponse(false, res, { error: error });
-        });
-    });
-
-    app.post('/api/dequeue/', middleware.requireApiUser, function (req, res) {
-        messages.dequeue(req.user.email).then(function () {
-            apiResponse(true, res);
-        }).fail(function (error) {
-            apiResponse(false, res, { error: error });
-        });
-    });
-
-    app.ws('/api/messages/', function (ws, req) {
-        users.authenticate(req.query.email,
-                req.query.password).then(function (user) {
-            // Successful user authentication
-            ws.send(JSON.stringify([{
-                'html': '<b>Hello</b>, world!',
-                'recurring': 1,
-                'target': moment().add(1, 'm').format('MM-DD-YYYY HH:mm')
-            }]));
-        }).fail(function () {
-            // Unsuccessful user authentication
-            ws.close();
         });
     });
 };

@@ -2,7 +2,9 @@
 
 var config = {
     server: {
-        port: 8000
+        port: 8000,
+        messagesPath: '/api/messages/',
+        messageProtocol: 'message'
     },
 
     db: {

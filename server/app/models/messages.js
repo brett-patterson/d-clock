@@ -94,10 +94,10 @@ var dequeue = function (email) {
     var deferred = Q.defer();
 
     queue(email).then(function (result) {
-        result.shift();
+        var message = result.shift();
         db.newPatchBuilder('messages', email).replace('queue', result)
             .apply().then(function () {
-                deferred.resolve(true);
+                deferred.resolve(message);
             }).fail(function (error) {
                 deferred.reject(new Error(error.body));
             });

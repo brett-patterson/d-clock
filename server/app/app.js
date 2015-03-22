@@ -1,9 +1,9 @@
 'use strict';
 
-var path = require('path'),
+var http = require('http'),
+    path = require('path'),
 
     express = require('express'),
-    expressWs = require('express-ws'),
     bodyParser = require('body-parser'),
     cookieParser = require('cookie-parser'),
     flash = require('express-flash'),
@@ -13,11 +13,15 @@ var path = require('path'),
     LocalStrategy = require('passport-local'),
 
     config = require('./config'),
+    messageServer = require('./messageServer'),
     users = require('./models/users');
 
 // Create express application
-var app = express();
-expressWs(app);
+var app = express(),
+    server = http.createServer(app);
+
+// Create message web socket server
+messageServer(server);
 
 // Set view engine
 app.set('views', path.join(__dirname, 'views'));
@@ -82,4 +86,4 @@ passport.deserializeUser(function (email, done) {
     });
 });
 
-module.exports = app;
+module.exports = server;
