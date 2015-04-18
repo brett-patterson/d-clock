@@ -2,10 +2,8 @@
 
 define([
     'react',
-    'jquery',
     'ckeditor'
-], function (React, jQuery) {
-
+], function (React) {
     /**
      * A React component representing a WYIWYG HTML editor.
      */

@@ -2,14 +2,13 @@
 
 define([
     'react',
-    'jquery',
     'reactBootstrap',
     'config',
     'loadingMixin',
     'dashboard/messages/messageModalContent',
     'dashboard/messages/message'
-], function (React, jQuery, ReactBootstrap, Config, LoadingMixin,
-             MessageModalContent, Message) {
+], function (React, ReactBootstrap, Config, LoadingMixin, MessageModalContent,
+             Message) {
 
     var ModalTrigger = ReactBootstrap.ModalTrigger;
     var Button = ReactBootstrap.Button;

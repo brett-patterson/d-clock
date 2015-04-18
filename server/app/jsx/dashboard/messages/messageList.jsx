@@ -2,14 +2,13 @@
 
 define([
     'react',
-    'jquery',
     'reactBootstrap',
     'moment',
     'config',
     'dashboard/dashboardSection',
     'dashboard/messages/editMessageModal',
     'dashboard/messages/newMessageModal'
-], function (React, jQuery, ReactBootstrap, Moment, Config, DashboardSection,
+], function (React, ReactBootstrap, Moment, Config, DashboardSection,
              EditMessageModal, NewMessageModal) {
     /**
      * A React component representing a list of messages.

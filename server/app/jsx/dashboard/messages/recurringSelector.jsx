@@ -2,10 +2,9 @@
 
 define([
     'react',
-    'jquery',
     'reactBootstrap',
     'config'
-], function (React, jQuery, ReactBootstrap, Config) {
+], function (React, ReactBootstrap, Config) {
     var ButtonGroup = ReactBootstrap.ButtonGroup;
 
     var RadioButton = React.createClass({

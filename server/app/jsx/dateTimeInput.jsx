@@ -2,9 +2,8 @@
 
 define([
     'react',
-    'jquery',
     'dateTimePicker'
-], function (React, jQuery) {
+], function (React) {
 
     /**
      * A React component representing a date/time input.
