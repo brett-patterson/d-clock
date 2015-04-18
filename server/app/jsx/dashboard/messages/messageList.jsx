@@ -115,8 +115,7 @@ define([
                 </div>
             );
 
-            return (<DashboardSection sectionID='messages-section'
-                                      sectionContent={sectionContent} />);
+            return (<DashboardSection sectionContent={sectionContent} />);
         }
     });
 });

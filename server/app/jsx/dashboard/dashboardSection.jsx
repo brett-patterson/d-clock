@@ -12,7 +12,7 @@ define([
 
         sectionTitleClicked: function (event) {
             var target = jQuery(event.target);
-            var section = jQuery('#' + this.props.sectionID);
+            var section = jQuery(React.findDOMNode(this.refs.content));
 
             if (target.hasClass('section-open')) {
                 target.removeClass('section-open').addClass('section-closed');
@@ -28,11 +28,9 @@ define([
                 <div className='dashboard-section'>
                     <div className='dashboard-section-title-wrapper'>
                         <h2 className='dashboard-section-title section-open'
-                            onClick={this.sectionTitleClicked}
-                            data-section={this.props.sectionID}>Messages</h2>
+                            onClick={this.sectionTitleClicked}>Messages</h2>
                     </div>
-                    <div className='dashboard-section-content'
-                         id={this.props.sectionID}>
+                    <div className='dashboard-section-content' ref='content'>
                         {this.props.sectionContent}
                     </div>
                 </div>

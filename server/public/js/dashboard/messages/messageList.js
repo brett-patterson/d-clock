@@ -115,8 +115,7 @@ define([
                 )
             );
 
-            return (React.createElement(DashboardSection, {sectionID: "messages-section", 
-                                      sectionContent: sectionContent}));
+            return (React.createElement(DashboardSection, {sectionContent: sectionContent}));
         }
     });
 });
