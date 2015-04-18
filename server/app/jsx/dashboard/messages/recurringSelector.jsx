@@ -38,6 +38,10 @@ define([
         },
 
         setValue: function (value) {
+            this.setState({
+                current: value
+            });
+
             var key = undefined;
             jQuery.each(Config.recurring, function (rKey, rValue) {
                 if (rValue === value) {

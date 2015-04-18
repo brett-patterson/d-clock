@@ -42,9 +42,8 @@ var asyncWhile = function (condition, body) {
         if (!condition()) {
             return deferred.resolve();
         }
-        console.log('inloop');
 
-        Q.when(body()).then(loop, deferred.reject);
+        Q.fcall(body).then(loop, deferred.reject);
     }
 
     Q.nextTick(loop);

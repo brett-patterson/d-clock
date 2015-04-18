@@ -87,20 +87,46 @@ var queue = function (email) {
 };
 
 /**
- * Remove the first message from a user's queue.
+ * Get the front of the message queue for a user.
  * @param {string} email - The user's email address
  */
-var dequeue = function (email) {
+var queueFront = function (email) {
     var deferred = Q.defer();
 
     queue(email).then(function (result) {
-        var message = result.shift();
-        db.newPatchBuilder('messages', email).replace('queue', result)
-            .apply().then(function () {
-                deferred.resolve(message);
-            }).fail(function (error) {
-                deferred.reject(new Error(error.body));
-            });
+        deferred.resolve(result[0]);
+    }).fail(function (error) {
+        deferred.reject(new Error(error.body));
+    });
+
+    return deferred.promise;
+};
+
+/**
+ * Remove a message from a user's queue. Since these operations are done
+ * asynchronously, we cannot guarantee the order of the queue, so we must
+ * remove by id, rather than just popping off the front of the queue.
+ * @param {string} email - The user's email address
+ */
+var dequeue = function (email, id) {
+    var deferred = Q.defer();
+
+    queue(email).then(function (result) {
+        var qIndex = util.indexOf(result, id, function (message) {
+            return message.id;
+        });
+
+        if (qIndex > -1) {
+            result.splice(qIndex, 1);
+            db.newPatchBuilder('messages', email).replace('queue', result)
+                .apply().then(function () {
+                    deferred.resolve(true);
+                }).fail(function (error) {
+                    deferred.reject(new Error(error.body));
+                });
+        } else {
+            deferred.resolve(false);
+        }
     }).fail(function (error) {
         deferred.reject(new Error(error.body));
     });
@@ -139,7 +165,7 @@ var update = function (email, message) {
                 });
             });
         } else {
-            deferred.reject('Message not found');
+            deferred.reject(new Error('Message not found'));
         }
     });
 
@@ -180,7 +206,7 @@ var remove = function (email, message) {
                 });
             });
         } else {
-            deferred.reject('Message not found');
+            deferred.reject(new Error('Message not found'));
         }
     }).fail(function (error) {
         deferred.reject(new Error(error.body));
@@ -193,6 +219,7 @@ module.exports = {
     all: all,
     add: add,
     queue: queue,
+    queueFront: queueFront,
     dequeue: dequeue,
     update: update,
     remove: remove

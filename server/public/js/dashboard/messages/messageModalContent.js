@@ -74,6 +74,7 @@ define([
         },
 
         getRecurring: function () {
+            console.log(this.refs.recurringInput.getValue());
             if (this.refs.recurringInput) {
                 return this.refs.recurringInput.getValue();
             }

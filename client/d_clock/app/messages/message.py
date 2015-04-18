@@ -8,7 +8,7 @@ class Message(object):
     """ A text/image message that can be sent to the clock display.
 
     """
-    def __init__(self, html="", recurring=ONCE,
+    def __init__(self, id, html="", recurring=ONCE,
                  target=datetime.now()):
         """ Initialize the Message object.
 
@@ -24,6 +24,7 @@ class Message(object):
             The day and time to show the message.
 
         """
+        self.id = id
         self.html = html
         self.recurring = recurring
         self.target = target
@@ -79,6 +80,7 @@ class Message(object):
 
         """
         return cls(
+            id=data['id'],
             html=data['html'],
             recurring=data['recurring'],
             target=datetime.strptime(data['target'], PACK_DATE_TIME_FORMAT)

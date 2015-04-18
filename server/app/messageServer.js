@@ -19,19 +19,27 @@ function handleConnection(connection, user) {
     util.asyncWhile(function () {
         return !queueEmpty;
     }, function () {
-        return messages.dequeue(user.email).then(function (message) {
+        return messages.queueFront(user.email).then(function (message) {
             if (message === undefined) {
                 queueEmpty = true;
             } else {
                 connection.send(JSON.stringify(message));
             }
         }).fail(function (error) {
-            // TODO: log error
+            //TODO: log error
             queueEmpty = true;
         });
     });
-}
 
+    connection.on('message', function (wsMessage) {
+        if (wsMessage.type === 'utf8') {
+            var data = JSON.parse(wsMessage.utf8Data);
+            if (data.received) {
+                messages.dequeue(user.email, data.id);
+            }
+        }
+    });
+}
 
 /**
  * Attach a WebSocket server to send messages to clients.
@@ -44,7 +52,7 @@ var attach = function (server) {
     });
 
     wsServer.on('request', function (request) {
-        var protocol = config.server.messageProtocol;
+        var auth, protocol = config.server.messageProtocol;
 
         if (request.resource !== config.server.messagesPath ||
                 request.requestedProtocols.indexOf(protocol) < 0) {
@@ -52,7 +60,7 @@ var attach = function (server) {
             return;
         }
 
-        var auth = basicAuth(request.httpRequest);
+        auth = basicAuth(request.httpRequest);
         if (auth !== undefined) {
             users.authenticate(auth.name, auth.pass).then(function (user) {
                 if (user) {

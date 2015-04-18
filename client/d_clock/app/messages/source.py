@@ -97,9 +97,14 @@ class MessageClient(WebSocketClient):
         """
         try:
             message = Message.unpack(json.loads(unicode(msg)))
-            print 'Got message: ', message.html
-            self._source.add_message(message)
-        except ValueError:
+            if self._source.add_message(message):
+                self.send(json.dumps({
+                    'received': True,
+                    'id': message.id
+                }))
+
+        except (ValueError, KeyError):
+            # TODO: log this error
             print 'Error parsing message: %s' % msg
 
 
@@ -129,7 +134,7 @@ class WebSocketSource(Source):
         try:
             self.client.connect()
         except HandshakeError as e:
-            # TODO: Show/log authentication error
+            # TODO: log authentication error
             print e
 
     def add_message(self, message):
@@ -140,8 +145,17 @@ class WebSocketSource(Source):
         message : Message
             The message to be added.
 
+        Returns:
+        --------
+        True if the message was added, False if the message had already been
+        added.
+
         """
-        self._messages.append(message)
+        if message.id not in [m.id for m in self._messages]:
+            self._messages.append(message)
+            return True
+
+        return False
 
     def messages(self):
         """ Return a list of Message objects received from the server.
