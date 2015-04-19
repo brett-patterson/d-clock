@@ -65,6 +65,21 @@ class Message(object):
 
         return False
 
+    def pack(self):
+        """ Pack the Message instance into a JSON-serializable object.
+
+        Returns:
+        --------
+        A JSON-serializable dictionary representation of the message
+
+        """
+        return {
+            'id': self.id,
+            'html': self.html,
+            'recurring': self.recurring,
+            'target': self.target.strftime(PACK_DATE_TIME_FORMAT)
+        }
+
     @classmethod
     def unpack(cls, data):
         """ Unpack a serialized message object.

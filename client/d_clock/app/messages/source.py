@@ -5,6 +5,7 @@ import os
 from ws4py.client.threadedclient import WebSocketClient
 from ws4py.exc import HandshakeError
 
+from d_clock.config import Config
 from message import Message
 
 
@@ -41,6 +42,18 @@ class Source(object):
     """ The base class for all message sources.
 
     """
+    def remove_message(self, message):
+        """ Remove a message from the list of messages. Should be implemented
+        by subclasses.
+
+        Parameters:
+        -----------
+        message : Message
+            The message to remove.
+
+        """
+        return None
+
     def messages(self):
         """ Returns a list of Message objects. Must be implemented by
         subclasses.
@@ -65,17 +78,43 @@ class FileSource(Source):
             The name of the file to read messages from.
 
         """
+        self._messages = []
         self.filename = filename
+
+    def remove_message(self, message):
+        """ Remove a message from the source.
+
+        Parameters:
+        -----------
+        message : Message
+            The message to remove
+
+        """
+        self._messages.remove(message)
+
+        try:
+            with open(self.filename, 'w') as f:
+                f.write(json.dumps([m.pack() for m in self._messages]))
+
+        except IOError:
+            self._messages = []
 
     def messages(self):
         """ Return a list of Message objects parsed from a JSON file.
 
         """
         if not os.path.isfile(self.filename):
-            return []
+            self._messages = []
 
-        with open(self.filename, 'r') as f:
-            return load_messages_from_json(f.read())
+        else:
+            try:
+                with open(self.filename, 'r') as f:
+                    self._messages = load_messages_from_json(f.read())
+
+            except IOError:
+                self._messages = []
+
+        return self._messages
 
 
 class MessageClient(WebSocketClient):
@@ -122,9 +161,13 @@ class WebSocketSource(Source):
             The hostname for the web socket server.
 
         """
-        self._messages = []
-
         self._host = host
+
+        try:
+            with open(Config.get('WEB_SOURCE_STORE'), 'r') as f:
+                self._messages = load_messages_from_json(f.read())
+        except IOError:
+            self._messages = []
 
         # TODO: No hardcoded authentication
         self.client = MessageClient(self, host, headers=[('Authorization',
@@ -153,9 +196,22 @@ class WebSocketSource(Source):
         """
         if message.id not in [m.id for m in self._messages]:
             self._messages.append(message)
+            self.save()
             return True
 
         return False
+
+    def remove_message(self, message):
+        """ Remove a message from the source.
+
+        Parameters:
+        -----------
+        message : Message
+            The message to remove
+
+        """
+        self._messages.remove(message)
+        self.save()
 
     def messages(self):
         """ Return a list of Message objects received from the server.
@@ -163,8 +219,10 @@ class WebSocketSource(Source):
         """
         return self._messages
 
-    def __del__(self):
-        """ Close the websocket on object destruction.
+    def save(self):
+        """ Save the list of messages to the file system.
 
         """
-        self.client.close()
+        serialized = json.dumps([m.pack() for m in self._messages])
+        with open(Config.get('WEB_SOURCE_STORE'), 'w') as f:
+            f.write(serialized)

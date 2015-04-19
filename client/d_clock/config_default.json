@@ -19,5 +19,6 @@
       "20:00"
     ]
   ],
-  "WS_HOST": "ws://localhost:8000/api/messages/"
+  "WS_HOST": "ws://localhost:8000/api/messages/",
+  "WEB_SOURCE_STORE": "web_source.messages"
 }
