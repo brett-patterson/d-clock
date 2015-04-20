@@ -41,7 +41,7 @@ class Source(object):
     """ The base class for all message sources.
 
     """
-    def remove_message(self, message):
+    def consume_message(self, message):
         """ Remove a message from the list of messages. Should be implemented
         by subclasses.
 
@@ -51,7 +51,7 @@ class Source(object):
             The message to remove.
 
         """
-        return None
+        pass
 
     def messages(self):
         """ Returns a list of Message objects. Must be implemented by
@@ -201,7 +201,7 @@ class WebSocketSource(Source):
 
         return False
 
-    def remove_message(self, message):
+    def consume_message(self, message):
         """ Remove a message from the source.
 
         Parameters:

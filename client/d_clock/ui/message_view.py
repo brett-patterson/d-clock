@@ -45,4 +45,5 @@ class MessageView(QLabel):
         for message in self.source.messages():
             if message.should_show(self.clock.when()):
                 self.setText(message.html)
+                self.source.consume_message(message)
                 break
