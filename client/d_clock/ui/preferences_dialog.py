@@ -6,7 +6,7 @@ import urllib2
 from PySide.QtCore import Qt
 from PySide.QtGui import (QDialog, QTabWidget, QVBoxLayout, QWidget,
                           QFormLayout, QLineEdit, QCheckBox, QGroupBox,
-                          QPushButton, QMessageBox)
+                          QPushButton, QMessageBox, QLabel)
 
 from d_clock.config import Config
 
@@ -35,6 +35,18 @@ class PreferencesDialog(QDialog):
         general_widget.setLayout(general_layout)
         tab_widget.addTab(general_widget, 'General')
 
+        advanced_widget = QWidget()
+        advanced_layout = QVBoxLayout()
+
+        warning_label = QLabel('Caution: Changing these settings can potentially break the application.')
+        warning_label.setStyleSheet('QLabel { color: red; }')
+        advanced_layout.addWidget(warning_label)
+
+        advanced_layout.addWidget(self.setup_advanced_server_group())
+        advanced_layout.addWidget(self.setup_advanced_storage_group())
+        advanced_widget.setLayout(advanced_layout)
+        tab_widget.addTab(advanced_widget, 'Advanced')
+
         layout = QVBoxLayout()
         layout.addWidget(tab_widget)
         self.setLayout(layout)
@@ -47,32 +59,31 @@ class PreferencesDialog(QDialog):
         A QGroupBox widget
 
         """
-        general_server_group = QGroupBox('Server')
-        general_server_layout = QFormLayout()
-        general_server_layout.setFieldGrowthPolicy(
-            QFormLayout.AllNonFixedFieldsGrow)
+        group = QGroupBox('Server')
+        layout = QFormLayout()
+        layout.setFieldGrowthPolicy(QFormLayout.AllNonFixedFieldsGrow)
 
         email, password = self.auth_credentials()
 
         self.email_edit = QLineEdit(email)
         self.email_edit.textChanged.connect(self.update_auth)
-        general_server_layout.addRow('Email', self.email_edit)
+        layout.addRow('Email', self.email_edit)
 
         self.password_edit = QLineEdit(password)
         self.password_edit.setEchoMode(QLineEdit.Password)
         self.password_edit.textChanged.connect(self.update_auth)
-        general_server_layout.addRow('Password', self.password_edit)
+        layout.addRow('Password', self.password_edit)
 
         show_password_widget = QCheckBox()
         show_password_widget.stateChanged.connect(self.on_show_password_toggle)
-        general_server_layout.addRow('Show password', show_password_widget)
+        layout.addRow('Show password', show_password_widget)
 
         test_authentication_button = QPushButton('Test Authentication')
         test_authentication_button.clicked.connect(self.on_test_authentication)
-        general_server_layout.addRow(test_authentication_button)
+        layout.addRow(test_authentication_button)
 
-        general_server_group.setLayout(general_server_layout)
-        return general_server_group
+        group.setLayout(layout)
+        return group
 
     def update_auth(self):
         """ Handler to update the configuration object with the values
@@ -156,3 +167,55 @@ class PreferencesDialog(QDialog):
         else:
             QMessageBox.about(self, 'No server',
                               'No authentication server provided')
+
+    def setup_advanced_server_group(self):
+        """ Setup the 'Server' group in the 'Advanced' tab.
+
+        Returns:
+        --------
+        A QGroupBox widget
+
+        """
+        group = QGroupBox('Server')
+        layout = QFormLayout()
+        layout.setFieldGrowthPolicy(QFormLayout.AllNonFixedFieldsGrow)
+
+        self.message_url_edit = QLineEdit(Config.get('WS_HOST', ''))
+        self.message_url_edit.textChanged.connect(self.update_message_url)
+        layout.addRow('Messages API URL', self.message_url_edit)
+
+        group.setLayout(layout)
+        return group
+
+    def update_message_url(self):
+        """ Handler to update the configuration object with the value
+        in the message API url field.
+
+        """
+        Config.set('WS_HOST', self.message_url_edit.text())
+
+    def setup_advanced_storage_group(self):
+        """ Setup the 'Storage' group in the 'Advanced' tab.
+
+        Returns:
+        --------
+        A QGroupBox widget
+        """
+        group = QGroupBox('Storage')
+        layout = QFormLayout()
+        layout.setFieldGrowthPolicy(QFormLayout.AllNonFixedFieldsGrow)
+
+        path = Config.get('WEB_SOURCE_STORE', '')
+        self.message_storage_edit = QLineEdit(path)
+        self.message_storage_edit.textChanged.connect(self.update_message_storage)
+        layout.addRow('Message Storage Path', self.message_storage_edit)
+
+        group.setLayout(layout)
+        return group
+
+    def update_message_storage(self):
+        """ Handler to update the configuration object with the value in the
+        message storage path field.
+
+        """
+        Config.set('WEB_SOURCE_STORE', self.message_storage_edit.text())
