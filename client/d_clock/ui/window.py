@@ -6,6 +6,7 @@ from PySide.QtGui import QAction, QMainWindow, QMenu, QWidget, QVBoxLayout
 from d_clock.config import Config
 from clock_view import ClockView
 from message_view import MessageView
+from preferences_dialog import PreferencesDialog
 
 
 class Window(QMainWindow):
@@ -45,9 +46,13 @@ class Window(QMainWindow):
 
         file_menu = QMenu('File')
 
+        preferences_action = QAction('Preferences', file_menu)
+        preferences_action.triggered.connect(self.on_preferences_triggered)
+
         quit_action = QAction('Quit', file_menu)
         quit_action.triggered.connect(self.on_quit_triggered)
 
+        file_menu.addAction(preferences_action)
         file_menu.addAction(quit_action)
         menubar.addMenu(file_menu)
 
@@ -61,6 +66,13 @@ class Window(QMainWindow):
 
         view_menu.addAction(fullscreen_action)
         menubar.addMenu(view_menu)
+
+    def on_preferences_triggered(self):
+        """ The handler for when the 'Preferences' action is triggered.
+
+        """
+        self.preferences_dialog = PreferencesDialog()
+        self.preferences_dialog.show()
 
     def on_quit_triggered(self):
         """ The handler for when the `Quit` action is triggered.

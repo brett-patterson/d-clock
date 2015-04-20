@@ -1,4 +1,3 @@
-import base64
 import json
 import os
 
@@ -169,16 +168,17 @@ class WebSocketSource(Source):
         except IOError:
             self._messages = []
 
-        # TODO: No hardcoded authentication
-        self.client = MessageClient(self, host, headers=[('Authorization',
-            'Basic %s' % base64.b64encode('brett.patterson@rice.edu:just67')),
-            ('Sec-WebSocket-Protocol', 'message')])
+        auth = Config.get('WS_AUTH')
+        if auth is not None:
+            self.client = MessageClient(self, host, headers=[
+                                        ('Authorization', 'Basic %s' % auth),
+                                        ('Sec-WebSocket-Protocol', 'message')])
 
-        try:
-            self.client.connect()
-        except HandshakeError as e:
-            # TODO: log authentication error
-            print e
+            try:
+                self.client.connect()
+            except HandshakeError as e:
+                # TODO: log authentication error
+                print e
 
     def add_message(self, message):
         """ Add a message to the source.

@@ -57,6 +57,15 @@ var api = function (app) {
         failureFlash: true
     }));
 
+    app.post('/api/test-auth/', function (req, res) {
+        users.authenticate(req.body.email, req.body.password)
+            .then(function (result) {
+                apiResponse(true, res, { status: result !== false });
+            }).fail(function () {
+                apiResponse(false, res, { status: 'error' });
+            });
+    });
+
     app.post('/api/messages/', middleware.requireApiUser, function (req, res) {
         messages.all(req.user.email).then(function (result) {
             apiResponse(true, res, result);
