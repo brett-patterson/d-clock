@@ -97,6 +97,6 @@ class Message(object):
         return cls(
             id=data['id'],
             html=data['html'],
-            recurring=data['recurring'],
+            recurring=int(data['recurring']),
             target=datetime.strptime(data['target'], PACK_DATE_TIME_FORMAT)
         )

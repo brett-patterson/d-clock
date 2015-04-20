@@ -164,7 +164,7 @@ class WebSocketSource(Source):
         self._host = host
 
         try:
-            with open(Config.get('WEB_SOURCE_STORE'), 'r') as f:
+            with open(Config.get_filename('WEB_SOURCE_STORE'), 'r') as f:
                 self._messages = load_messages_from_json(f.read())
         except IOError:
             self._messages = []
@@ -224,5 +224,5 @@ class WebSocketSource(Source):
 
         """
         serialized = json.dumps([m.pack() for m in self._messages])
-        with open(Config.get('WEB_SOURCE_STORE'), 'w') as f:
+        with open(Config.get_filename('WEB_SOURCE_STORE'), 'w') as f:
             f.write(serialized)

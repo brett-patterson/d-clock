@@ -42,6 +42,27 @@ class Config(object):
         """
         return self.config.get(name, default)
 
+    def get_filename(self, name, default=None):
+        """ Get a filename configuration option. The filename is returned as
+        an absolute path relative to the top-level application directory.
+
+        Parameters:
+        -----------
+        name : string
+            The name of the configuration option.
+
+        default : object
+            The default to return if no configuration option is found.
+
+        Returns:
+        --------
+        An absolute path string corresponding to the option name or the
+        default.
+
+        """
+        filename = self.get(name, default=default)
+        return os.path.join(os.path.dirname(__file__), filename)
+
     def get_instance(self, name, cls, default=None):
         """ Get an instance for a given configuration name and class. The class
         must implement an `unpack` class method, used to reconstruct the
